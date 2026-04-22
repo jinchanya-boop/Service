@@ -7,140 +7,76 @@
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-/* ════════════════════════════════════
-   TOKENS
-════════════════════════════════════ */
 :root {
-  --pk:  #F4B8C8; --pk2: #E07090; --pk3: #C0506A;
-  --lv:  #D8C8F0; --lv2: #9070C0;
-  --mn:  #B8E8D4; --mn2: #40A870; --mn3: #2D7A50;
-  --sk:  #B8D8F4; --sk2: #4080C0;
-  --pe:  #F9D4C0; --ye:  #F4E4A0;
-  --re:  #F4B8B8; --re2: #D04040;
-  --cr:  #FDF6F0;
-  --wh:  #FFFFFF;
-  --tx:  #2C2030;
-  --tx2: #6A5060;
-  --tx3: #9A8090;
-  --bd:  #E8D0DC;
-  --sh:  rgba(160,100,120,.09);
-  --r:   18px; --rs: 10px; --rm: 14px;
-  --sem: 1; /* 1 or 2 */
+  --pk:#F4B8C8; --pk2:#E07090; --pk3:#C0506A;
+  --lv:#D8C8F0; --lv2:#9070C0;
+  --mn:#B8E8D4; --mn2:#40A870; --mn3:#2D7A50;
+  --sk:#B8D8F4; --sk2:#4080C0;
+  --pe:#F9D4C0; --ye:#F4E4A0;
+  --re:#F4B8B8; --re2:#D04040;
+  --cr:#FDF6F0; --wh:#FFFFFF;
+  --tx:#2C2030; --tx2:#6A5060; --tx3:#9A8090;
+  --bd:#E8D0DC; --sh:rgba(160,100,120,.09);
+  --r:18px; --rs:10px; --rm:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Sarabun',sans-serif;background:var(--cr);color:var(--tx);min-height:100vh}
 
-/* ── Nav ── */
-.nav{
-  background:var(--wh);border-bottom:1.5px solid var(--bd);
-  display:flex;align-items:center;gap:0;
-  position:sticky;top:0;z-index:50;
-  box-shadow:0 2px 12px var(--sh);
-}
-.nav-logo{
-  padding:14px 24px;font-size:1rem;font-weight:800;color:var(--pk2);
-  display:flex;align-items:center;gap:8px;border-right:1.5px solid var(--bd);
-  white-space:nowrap;
-}
+/* NAV */
+.nav{background:var(--wh);border-bottom:1.5px solid var(--bd);display:flex;align-items:center;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px var(--sh)}
+.nav-logo{padding:14px 24px;font-size:1rem;font-weight:800;color:var(--pk2);display:flex;align-items:center;gap:8px;border-right:1.5px solid var(--bd);white-space:nowrap}
 .nav-logo span{font-size:1.3rem}
-.nav-tabs{display:flex;flex:1;overflow:hidden}
-.nav-tab{
-  flex:1;padding:14px 20px;text-align:center;font-size:.88rem;font-weight:600;
-  color:var(--tx2);cursor:pointer;border:none;background:none;
-  border-bottom:3px solid transparent;transition:all .2s;
-  white-space:nowrap;
-}
+.nav-tabs{display:flex;flex:1}
+.nav-tab{flex:1;padding:14px 20px;text-align:center;font-size:.88rem;font-weight:600;color:var(--tx2);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all .2s}
 .nav-tab.active{color:var(--pk2);border-bottom-color:var(--pk2);background:#FFF5F8}
-.nav-tab:hover:not(.active){background:var(--cr);color:var(--tx)}
+.nav-tab:hover:not(.active){background:var(--cr)}
 
-/* ── Pages ── */
+/* PAGE */
 .page{display:none;min-height:calc(100vh - 53px)}
 .page.active{display:block}
 
-/* ═══════════════════════════════
-   FORM PAGE
-═══════════════════════════════ */
-.form-wrap{
-  max-width:780px;margin:0 auto;
-  padding:28px 16px 60px;
-  position:relative;
-}
-.form-wrap::before{
-  content:'';position:fixed;top:-100px;right:-100px;
-  width:400px;height:400px;border-radius:50%;
-  background:var(--lv);opacity:.12;filter:blur(70px);pointer-events:none;z-index:0;
-}
-.form-wrap > *{position:relative;z-index:1}
+/* ======= FORM PAGE ======= */
+.fw{max-width:780px;margin:0 auto;padding:28px 16px 60px}
 
-.fhdr{
-  background:var(--wh);border-radius:22px;padding:28px 32px 24px;
-  margin-bottom:18px;border:1.5px solid var(--bd);
-  box-shadow:0 3px 20px var(--sh);text-align:center;
-  position:relative;overflow:hidden;
-}
-.fhdr::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--pk),var(--lv),var(--sk),var(--mn));
-}
-.fhdr-ico{
-  width:60px;height:60px;background:linear-gradient(135deg,var(--pk),var(--pe));
-  border-radius:18px;display:flex;align-items:center;justify-content:center;
-  font-size:26px;margin:0 auto 14px;box-shadow:0 4px 14px rgba(244,184,200,.45);
-}
+.fhdr{background:var(--wh);border-radius:22px;padding:28px 32px 24px;margin-bottom:18px;border:1.5px solid var(--bd);box-shadow:0 3px 20px var(--sh);text-align:center;position:relative;overflow:hidden}
+.fhdr::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--pk),var(--lv),var(--sk),var(--mn))}
+.fhdr-ico{width:60px;height:60px;background:linear-gradient(135deg,var(--pk),var(--pe));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;box-shadow:0 4px 14px rgba(244,184,200,.45)}
 .fhdr h1{font-size:1.3rem;font-weight:800;margin-bottom:5px}
 .fhdr p{font-size:.85rem;color:var(--tx2)}
 
-/* progress bar */
-.prog-wrap{
-  background:var(--wh);border-radius:var(--r);padding:16px 22px;
-  margin-bottom:16px;border:1.5px solid var(--bd);box-shadow:0 2px 10px var(--sh);
-}
-.prog-top{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;color:var(--tx2);margin-bottom:8px}
-.prog-track{background:var(--bd);border-radius:99px;height:7px;overflow:hidden}
-.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pk),var(--pk2));transition:width .5s cubic-bezier(.4,0,.2,1)}
-.prog-dots{display:flex;justify-content:space-between;margin-top:10px}
+/* PROGRESS */
+.pw{background:var(--wh);border-radius:var(--r);padding:16px 22px;margin-bottom:16px;border:1.5px solid var(--bd);box-shadow:0 2px 10px var(--sh)}
+.pt{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;color:var(--tx2);margin-bottom:8px}
+.ptr{background:var(--bd);border-radius:99px;height:7px;overflow:hidden}
+.ptf{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pk),var(--pk2));transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
+.pdots{display:flex;justify-content:space-between;margin-top:10px}
 .pdot{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
-.pdot .d{
-  width:26px;height:26px;border-radius:50%;border:2px solid var(--bd);background:var(--wh);
-  display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;
-  color:var(--tx2);transition:all .25s;
-}
+.pdot .d{width:26px;height:26px;border-radius:50%;border:2px solid var(--bd);background:var(--wh);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--tx2);transition:all .25s}
 .pdot.active .d{background:linear-gradient(135deg,var(--pk),var(--pk2));border-color:var(--pk2);color:#fff;box-shadow:0 2px 8px rgba(224,112,144,.35)}
 .pdot.done .d{background:var(--mn);border-color:var(--mn2);color:var(--mn3)}
 .pdot .lb{font-size:.63rem;color:var(--tx3);text-align:center;white-space:nowrap}
 
-/* card */
-.card{
-  background:var(--wh);border-radius:var(--r);padding:24px 28px;margin-bottom:14px;
-  border:1.5px solid var(--bd);box-shadow:0 2px 14px var(--sh);
-  animation:slideUp .3s cubic-bezier(.4,0,.2,1);
-}
+/* CARD */
+.card{background:var(--wh);border-radius:var(--r);padding:24px 28px;margin-bottom:14px;border:1.5px solid var(--bd);box-shadow:0 2px 14px var(--sh);animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
 @keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.card-ttl{font-size:1rem;font-weight:800;color:var(--tx);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.cttl{font-size:1rem;font-weight:800;color:var(--tx);margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .badge{background:linear-gradient(135deg,var(--pk),var(--pe));color:var(--pk3);border-radius:7px;padding:2px 9px;font-size:.72rem;font-weight:700}
-.badge-ok{background:linear-gradient(135deg,var(--mn),#D4F4E0);color:var(--mn3)}
-.badge-warn{background:linear-gradient(135deg,var(--ye),#FFF0B0);color:#806000}
-.badge-err{background:linear-gradient(135deg,var(--re),#FFD0D0);color:var(--re2)}
 
-/* hour meter */
-.hour-meter{
-  background:linear-gradient(135deg,var(--cr),#FFF0F8);
-  border:1.5px solid var(--bd);border-radius:var(--rm);
-  padding:14px 18px;margin-bottom:14px;
-}
-.hm-title{font-size:.8rem;font-weight:700;color:var(--tx2);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.hm-bar{background:var(--bd);border-radius:99px;height:10px;overflow:hidden;margin-bottom:6px}
-.hm-fill{height:100%;border-radius:99px;transition:width .4s,background .4s}
-.hm-fill.ok  {background:linear-gradient(90deg,var(--mn2),#60D890)}
-.hm-fill.warn{background:linear-gradient(90deg,#F0B040,#F0D040)}
-.hm-fill.err {background:linear-gradient(90deg,var(--re2),#F06060)}
-.hm-info{display:flex;justify-content:space-between;font-size:.75rem;color:var(--tx2)}
-.hm-status{font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:6px;margin-top:6px;display:inline-block}
-.hm-status.ok  {background:#D4F4E0;color:var(--mn3)}
-.hm-status.warn{background:#FFF0B0;color:#806000}
-.hm-status.err {background:#FFD0D0;color:var(--re2)}
+/* HOUR METER */
+.hm{background:linear-gradient(135deg,var(--cr),#FFF0F8);border:1.5px solid var(--bd);border-radius:var(--rm);padding:14px 18px;margin-bottom:14px}
+.hmt{font-size:.8rem;font-weight:700;color:var(--tx2);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.hmb{background:var(--bd);border-radius:99px;height:10px;overflow:hidden;margin-bottom:6px}
+.hmf{height:100%;border-radius:99px;transition:width .4s,background .4s;width:0%}
+.hmf.ok{background:linear-gradient(90deg,var(--mn2),#60D890)}
+.hmf.warn{background:linear-gradient(90deg,#F0B040,#F0D040)}
+.hmf.err{background:linear-gradient(90deg,var(--re2),#F06060)}
+.hmi{display:flex;justify-content:space-between;font-size:.75rem;color:var(--tx2)}
+.hms{font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:6px;margin-top:6px;display:inline-block}
+.hms.ok{background:#D4F4E0;color:var(--mn3)}
+.hms.warn{background:#FFF0B0;color:#806000}
+.hms.err{background:#FFD0D0;color:var(--re2)}
 
-/* fields */
+/* FIELDS */
 .fg{display:grid;gap:12px}
 .fg.c2{grid-template-columns:1fr 1fr}
 .fg.c3{grid-template-columns:1fr 1fr 1fr}
@@ -148,228 +84,173 @@ body{font-family:'Sarabun',sans-serif;background:var(--cr);color:var(--tx);min-h
 .fi{display:flex;flex-direction:column;gap:5px}
 .fi label{font-size:.78rem;font-weight:700;color:var(--tx2)}
 .fi label .req{color:var(--pk2)}
-.fi input,.fi select,.fi textarea{
-  padding:10px 13px;border:1.5px solid var(--bd);border-radius:var(--rs);
-  font-family:inherit;font-size:.9rem;color:var(--tx);background:var(--cr);outline:none;transition:all .18s;
-}
+.fi input,.fi select,.fi textarea{padding:10px 13px;border:1.5px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:.9rem;color:var(--tx);background:var(--cr);outline:none;transition:all .18s}
 .fi input:focus,.fi select:focus,.fi textarea:focus{border-color:var(--pk2);background:var(--wh);box-shadow:0 0 0 3px rgba(224,112,144,.1)}
 .fi textarea{resize:vertical;min-height:74px;line-height:1.55}
 
-/* activity cards */
-.act-card{
-  border:1.5px solid var(--bd);border-radius:var(--rm);overflow:hidden;margin-bottom:12px;
-  transition:box-shadow .2s;
-}
-.act-card:hover{box-shadow:0 3px 14px var(--sh)}
-.act-hdr{
-  display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;
-  background:var(--cr);user-select:none;
-}
-.act-hdr:hover{background:#FFF5F8}
-.act-num{
-  width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0;
-}
+/* ACTIVITY CARD */
+.ac{border:1.5px solid var(--bd);border-radius:var(--rm);overflow:hidden;margin-bottom:12px;transition:box-shadow .2s}
+.ac:hover{box-shadow:0 3px 14px var(--sh)}
+.ach{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;background:var(--cr);user-select:none}
+.ach:hover{background:#FFF5F8}
+.acn{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0}
 .n1{background:linear-gradient(135deg,#F4B8C8,#E07090)}
 .n2{background:linear-gradient(135deg,#B8C8F4,#7090E0)}
 .n3{background:linear-gradient(135deg,#B8F4D0,#40C870)}
 .n4{background:linear-gradient(135deg,#F4D8B8,#D08030)}
 .n5{background:linear-gradient(135deg,#D8B8F4,#9050D0)}
-.act-hdr-txt{flex:1}
-.act-hdr-txt h3{font-size:.9rem;font-weight:700;color:var(--tx)}
-.act-hdr-txt p{font-size:.73rem;color:var(--tx2);margin-top:1px}
-.act-toggle{font-size:.7rem;color:var(--tx3);transition:transform .25s}
-.act-toggle.open{transform:rotate(180deg)}
-.act-body{padding:16px;border-top:1.5px solid var(--bd);display:none;background:var(--wh)}
-.act-body.open{display:block;animation:slideUp .2s}
+.ach-txt{flex:1}
+.ach-txt h3{font-size:.9rem;font-weight:700;color:var(--tx)}
+.ach-txt p{font-size:.73rem;color:var(--tx2);margin-top:1px}
+.arr{font-size:.7rem;color:var(--tx3);transition:transform .25s}
+.arr.open{transform:rotate(180deg)}
+.acb{padding:16px;border-top:1.5px solid var(--bd);display:none;background:var(--wh)}
+.acb.open{display:block;animation:slideUp .2s}
 
-/* optional toggle - removed */
+/* UPLOAD */
+.upz{border:2px dashed var(--bd);border-radius:var(--rs);padding:16px;text-align:center;cursor:pointer;background:var(--cr);transition:all .2s;position:relative;margin-top:4px}
+.upz:hover{border-color:var(--pk2);background:#FFF5F8}
+.upz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upz .uico{font-size:24px;margin-bottom:4px}
+.upz p{font-size:.75rem;color:var(--tx2)}
+.upz .prev{margin-top:8px;max-width:100%;max-height:120px;border-radius:7px;object-fit:cover;display:none}
 
-/* upload */
-.upzone{
-  border:2px dashed var(--bd);border-radius:var(--rs);padding:16px;text-align:center;
-  cursor:pointer;background:var(--cr);transition:all .2s;position:relative;margin-top:4px;
-}
-.upzone:hover{border-color:var(--pk2);background:#FFF5F8}
-.upzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-.upzone .uico{font-size:24px;margin-bottom:4px}
-.upzone p{font-size:.75rem;color:var(--tx2)}
-.upzone .prev{margin-top:8px;max-width:100%;max-height:120px;border-radius:7px;object-fit:cover;display:none}
+/* TEACHER BOX */
+.tbox{background:linear-gradient(135deg,#E8FAF0,#D0F4E4);border:1.5px solid var(--mn);border-radius:var(--rs);padding:11px 14px;font-size:.84rem;font-weight:600;color:var(--mn3);display:flex;align-items:center;gap:8px;margin-top:10px}
 
-/* nav buttons */
-.nav-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+/* BUTTONS */
+.nb{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
 .btn{padding:11px 26px;border:none;border-radius:var(--rs);font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px}
-.btn-out{background:var(--wh);border:2px solid var(--bd);color:var(--tx2)}
-.btn-out:hover{border-color:var(--pk2);color:var(--pk2)}
-.btn-pri{background:linear-gradient(135deg,var(--pk),var(--pk2));color:#fff;box-shadow:0 3px 14px rgba(224,112,144,.3)}
-.btn-pri:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(224,112,144,.4)}
-.btn-pri:active{transform:translateY(0)}
+.btn-o{background:var(--wh);border:2px solid var(--bd);color:var(--tx2)}
+.btn-o:hover{border-color:var(--pk2);color:var(--pk2)}
+.btn-p{background:linear-gradient(135deg,var(--pk),var(--pk2));color:#fff;box-shadow:0 3px 14px rgba(224,112,144,.3)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(224,112,144,.4)}
+.btn-p:active{transform:translateY(0)}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
 .spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:rot .65s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
 
-/* step panels */
-.sp{display:none}.sp.active{display:block}
+/* STEPS */
+.sp{display:none}
+.sp.active{display:block}
 
-/* summary */
-.sum-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);font-size:.83rem}
-.sum-row:last-child{border-bottom:none}
-.sum-key{color:var(--tx2);min-width:130px;font-weight:600}
-.sum-val{color:var(--tx);font-weight:700}
-.sum-act{background:var(--cr);border-radius:var(--rs);padding:11px 14px;margin-top:9px}
-.sum-act h4{font-weight:800;color:var(--tx);margin-bottom:7px}
+/* SUMMARY */
+.sr{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);font-size:.83rem}
+.sr:last-child{border-bottom:none}
+.sk2{color:var(--tx2);min-width:130px;font-weight:600}
+.sv{color:var(--tx);font-weight:700}
+.sa{background:var(--cr);border-radius:var(--rs);padding:11px 14px;margin-top:9px}
+.sa h4{font-weight:800;color:var(--tx);margin-bottom:7px}
+.pill{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:.72rem;font-weight:700}
+.pill.ok{background:#D4F4E0;color:var(--mn3)}
+.pill.fail{background:#FFD0D0;color:var(--re2)}
 
-/* success */
-.success{display:none;text-align:center;padding:40px 24px;animation:slideUp .4s}
-.success .sico{font-size:56px;display:block;margin-bottom:16px;animation:pop .5s .1s both}
+/* SUCCESS */
+.suc{display:none;text-align:center;padding:40px 24px;animation:slideUp .4s}
+.suc .sico{font-size:56px;display:block;margin-bottom:16px;animation:pop .5s .1s both}
 @keyframes pop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-.success h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}
-.success p{color:var(--tx2);font-size:.88rem;line-height:1.6}
+.suc h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.suc p{color:var(--tx2);font-size:.88rem;line-height:1.6}
 
-/* teacher box */
-.teacher-box{
-  background:linear-gradient(135deg,#E8FAF0,#D0F4E4);border:1.5px solid var(--mn);
-  border-radius:var(--rs);padding:11px 14px;font-size:.84rem;font-weight:600;
-  color:var(--mn3);display:flex;align-items:center;gap:8px;margin-top:10px;
-}
-
-/* ═══════════════════════════════
-   DASHBOARD PAGE
-═══════════════════════════════ */
-.dash-wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
-
-.dash-hdr{margin-bottom:24px}
-.dash-hdr h2{font-size:1.4rem;font-weight:800;color:var(--tx)}
-.dash-hdr p{font-size:.88rem;color:var(--tx2);margin-top:3px}
-
-.dash-controls{
-  display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;
-}
+/* ======= DASHBOARD ======= */
+.dw{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
+.dhdr{margin-bottom:24px}
+.dhdr h2{font-size:1.4rem;font-weight:800;color:var(--tx)}
+.dhdr p{font-size:.88rem;color:var(--tx2);margin-top:3px}
+.dctl{display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
 .ds{padding:8px 14px;border:1.5px solid var(--bd);border-radius:var(--rs);font-family:inherit;font-size:.84rem;color:var(--tx);background:var(--wh);cursor:pointer;outline:none}
 .ds:focus{border-color:var(--pk2)}
-.refresh-btn{
-  padding:8px 18px;border:none;border-radius:var(--rs);font-family:inherit;
-  font-size:.84rem;font-weight:700;cursor:pointer;
-  background:linear-gradient(135deg,var(--pk),var(--pk2));color:#fff;
-  box-shadow:0 2px 10px rgba(224,112,144,.25);transition:all .18s;display:flex;align-items:center;gap:6px;
-}
-.refresh-btn:hover{transform:translateY(-1px)}
+.rbtn{padding:8px 18px;border:none;border-radius:var(--rs);font-family:inherit;font-size:.84rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--pk),var(--pk2));color:#fff;box-shadow:0 2px 10px rgba(224,112,144,.25);transition:all .18s;display:flex;align-items:center;gap:6px}
+.rbtn:hover{transform:translateY(-1px)}
 
-/* stat cards */
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
-@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:400px){.stat-grid{grid-template-columns:1fr}}
-.stat-card{
-  background:var(--wh);border:1.5px solid var(--bd);border-radius:var(--r);
-  padding:18px 20px;box-shadow:0 2px 12px var(--sh);position:relative;overflow:hidden;
-}
-.stat-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3.5px;
-}
-.stat-card.c-all::before{background:linear-gradient(90deg,var(--pk),var(--lv))}
-.stat-card.c-ok::before{background:linear-gradient(90deg,var(--mn2),#40D890)}
-.stat-card.c-fail::before{background:linear-gradient(90deg,var(--re2),#F06060)}
-.stat-card.c-rate::before{background:linear-gradient(90deg,var(--sk2),var(--lv2))}
-.stat-num{font-size:2rem;font-weight:800;color:var(--tx);margin-bottom:2px;line-height:1.1}
-.stat-label{font-size:.78rem;color:var(--tx2);font-weight:600}
-.stat-sub{font-size:.72rem;color:var(--tx3);margin-top:3px}
+/* STAT CARDS */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media(max-width:700px){.sg{grid-template-columns:repeat(2,1fr)}}
+.sc{background:var(--wh);border:1.5px solid var(--bd);border-radius:var(--r);padding:18px 20px;box-shadow:0 2px 12px var(--sh);position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3.5px}
+.sc.ca::before{background:linear-gradient(90deg,var(--pk),var(--lv))}
+.sc.co::before{background:linear-gradient(90deg,var(--mn2),#40D890)}
+.sc.cf::before{background:linear-gradient(90deg,var(--re2),#F06060)}
+.sc.cr::before{background:linear-gradient(90deg,var(--sk2),var(--lv2))}
+.snum{font-size:2rem;font-weight:800;color:var(--tx);margin-bottom:2px;line-height:1.1}
+.slbl{font-size:.78rem;color:var(--tx2);font-weight:600}
+.ssub{font-size:.72rem;color:var(--tx3);margin-top:3px}
 
-/* charts */
-.chart-row{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px}
-@media(max-width:800px){.chart-row{grid-template-columns:1fr}}
-.chart-card{background:var(--wh);border:1.5px solid var(--bd);border-radius:var(--r);padding:20px 22px;box-shadow:0 2px 12px var(--sh)}
-.chart-ttl{font-size:.9rem;font-weight:800;color:var(--tx);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
-.chart-ttl span{font-size:.72rem;color:var(--tx3);font-weight:500}
-.chart-box{position:relative;height:220px}
+/* CHARTS */
+.cr2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:800px){.cr2{grid-template-columns:1fr}}
+.cc{background:var(--wh);border:1.5px solid var(--bd);border-radius:var(--r);padding:20px 22px;box-shadow:0 2px 12px var(--sh)}
+.cttl2{font-size:.9rem;font-weight:800;color:var(--tx);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.cttl2 span{font-size:.72rem;color:var(--tx3);font-weight:500}
+.cbox{position:relative;height:220px}
 
-/* table */
-.tbl-card{background:var(--wh);border:1.5px solid var(--bd);border-radius:var(--r);box-shadow:0 2px 12px var(--sh);overflow:hidden;margin-bottom:20px}
-.tbl-top{padding:16px 22px;font-size:.9rem;font-weight:800;color:var(--tx);border-bottom:1.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
-.tbl-top span{font-size:.75rem;color:var(--tx3);font-weight:500}
-.tbl-scroll{overflow-x:auto}
+/* TABLE */
+.tc{background:var(--wh);border:1.5px solid var(--bd);border-radius:var(--r);box-shadow:0 2px 12px var(--sh);overflow:hidden;margin-bottom:20px}
+.tt{padding:16px 22px;font-size:.9rem;font-weight:800;color:var(--tx);border-bottom:1.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.tt span{font-size:.75rem;color:var(--tx3);font-weight:500}
+.ts{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.83rem}
 th{background:var(--cr);padding:10px 14px;text-align:left;font-weight:700;color:var(--tx2);border-bottom:1.5px solid var(--bd);white-space:nowrap}
 td{padding:9px 14px;border-bottom:1px solid var(--bd);color:var(--tx);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#FFF8FB}
-.tbl-room{font-weight:800;color:var(--pk3)}
-.pill{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:.72rem;font-weight:700;gap:3px}
-.pill.ok  {background:#D4F4E0;color:var(--mn3)}
-.pill.warn{background:#FFF0B0;color:#806000}
-.pill.fail{background:#FFD0D0;color:var(--re2)}
-.pill.none{background:var(--bd);color:var(--tx3)}
+.tr{font-weight:800;color:var(--pk3)}
+.dp{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:.72rem;font-weight:700}
+.dp.ok{background:#D4F4E0;color:var(--mn3)}
+.dp.warn{background:#FFF0B0;color:#806000}
+.dp.fail{background:#FFD0D0;color:var(--re2)}
+.mb{background:var(--bd);border-radius:99px;height:6px;overflow:hidden;min-width:80px}
+.mf{height:100%;border-radius:99px}
+.mf.ok{background:var(--mn2)}
+.mf.warn{background:#D0A030}
+.mf.fail{background:var(--re2)}
 
-/* loading */
+/* LOADING / TOAST */
 .loading{text-align:center;padding:40px;color:var(--tx2);font-size:.9rem;font-weight:600}
-.loading-spin{display:inline-block;width:28px;height:28px;border:3px solid var(--bd);border-top-color:var(--pk2);border-radius:50%;animation:rot .7s linear infinite;margin-bottom:10px}
-
-/* mini bar */
-.mini-bar{background:var(--bd);border-radius:99px;height:6px;overflow:hidden;min-width:80px}
-.mini-fill{height:100%;border-radius:99px;transition:width .4s}
-.mini-fill.ok  {background:var(--mn2)}
-.mini-fill.warn{background:#D0A030}
-.mini-fill.fail{background:var(--re2)}
-
-/* toast */
-.toast{
-  position:fixed;bottom:22px;right:22px;background:var(--wh);border-radius:var(--rs);
-  padding:12px 18px;box-shadow:0 6px 28px rgba(0,0,0,.13);border-left:4px solid var(--mn2);
-  display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;
-  z-index:999;max-width:300px;transform:translateX(400px);transition:transform .35s cubic-bezier(.4,0,.2,1);
-}
+.lspin{display:inline-block;width:28px;height:28px;border:3px solid var(--bd);border-top-color:var(--pk2);border-radius:50%;animation:rot .7s linear infinite;margin-bottom:10px}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--wh);border-radius:var(--rs);padding:12px 18px;box-shadow:0 6px 28px rgba(0,0,0,.13);border-left:4px solid var(--mn2);display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;z-index:999;max-width:300px;transform:translateX(400px);transition:transform .35s cubic-bezier(.4,0,.2,1)}
 .toast.show{transform:translateX(0)}
 .toast.err{border-color:var(--re2)}
-
-/* section title */
-.sec-ttl{font-size:.7rem;font-weight:800;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
+.sttl{font-size:.7rem;font-weight:800;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;padding-left:2px}
 </style>
 </head>
 <body>
 
-<!-- ── Navigation ── -->
 <nav class="nav">
-  <div class="nav-logo"><span>🌱</span> กิจกรรมสาธารณประโยชน์</div>
+  <div class="nav-logo"><span>🌱</span>กิจกรรมสาธารณประโยชน์</div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchPage('form')">📝 กรอกแบบรายงาน</button>
     <button class="nav-tab" onclick="switchPage('dash')">📊 แดชบอร์ดสถิติ</button>
   </div>
 </nav>
 
-<!-- ════════════════════════════════
-     PAGE: FORM
-════════════════════════════════ -->
+<!-- ========== FORM PAGE ========== -->
 <div class="page active" id="page-form">
-<div class="form-wrap">
-
-  <!-- Header -->
+<div class="fw">
   <div class="fhdr">
     <div class="fhdr-ico">🌿</div>
     <h1>แบบรายงานผลกิจกรรมสาธารณประโยชน์</h1>
     <p>โรงเรียนสา จังหวัดน่าน · ปีการศึกษา 2569</p>
   </div>
 
-  <!-- Progress -->
-  <div class="prog-wrap">
-    <div class="prog-top">
-      <span id="progTxt">ขั้นตอนที่ 1 จาก 3</span>
-      <span id="progPct">0%</span>
-    </div>
-    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-    <div class="prog-dots">
+  <div class="pw">
+    <div class="pt"><span id="pTxt">ขั้นตอนที่ 1 จาก 3</span><span id="pPct">0%</span></div>
+    <div class="ptr"><div class="ptf" id="pFill"></div></div>
+    <div class="pdots">
       <div class="pdot active" onclick="goStep(1)"><div class="d">1</div><span class="lb">ข้อมูลนักเรียน</span></div>
       <div class="pdot" onclick="goStep(2)"><div class="d">2</div><span class="lb">บันทึกกิจกรรม</span></div>
       <div class="pdot" onclick="goStep(3)"><div class="d">3</div><span class="lb">ตรวจสอบ & ส่ง</span></div>
     </div>
   </div>
 
-  <!-- ═══ STEP 1 ═══ -->
+  <!-- STEP 1 -->
   <div class="sp active" id="sp-1">
     <div class="card">
-      <div class="card-ttl">👤 ข้อมูลนักเรียน <span class="badge">ขั้นตอนที่ 1</span></div>
+      <div class="cttl">👤 ข้อมูลนักเรียน <span class="badge">ขั้นตอนที่ 1</span></div>
       <div class="fg c3">
         <div class="fi">
           <label>ระดับชั้น <span class="req">*</span></label>
-          <select id="grade" required onchange="onGradeChange()">
+          <select id="f_grade" onchange="onGradeChange()">
             <option value="">-- เลือก --</option>
             <option>ม.1</option><option>ม.2</option><option>ม.3</option>
             <option>ม.4</option><option>ม.5</option><option>ม.6</option>
@@ -377,7 +258,7 @@ tr:hover td{background:#FFF8FB}
         </div>
         <div class="fi">
           <label>ห้อง <span class="req">*</span></label>
-          <select id="room" required onchange="onRoomChange()">
+          <select id="f_room" onchange="onRoomChange()">
             <option value="">-- เลือก --</option>
             <option>1</option><option>2</option><option>3</option><option>4</option>
             <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
@@ -385,13 +266,13 @@ tr:hover td{background:#FFF8FB}
         </div>
         <div class="fi">
           <label>เลขที่ <span class="req">*</span></label>
-          <input type="number" id="no" min="1" max="60" placeholder="เช่น 15" required>
+          <input type="number" id="f_no" min="1" max="60" placeholder="เช่น 15">
         </div>
       </div>
       <div class="fg c2" style="margin-top:12px">
         <div class="fi">
           <label>คำนำหน้า <span class="req">*</span></label>
-          <select id="prefix" required>
+          <select id="f_prefix">
             <option value="">-- เลือก --</option>
             <option>เด็กชาย</option><option>เด็กหญิง</option>
             <option>นาย</option><option>นางสาว</option>
@@ -399,13 +280,13 @@ tr:hover td{background:#FFF8FB}
         </div>
         <div class="fi">
           <label>ชื่อ-นามสกุล <span class="req">*</span></label>
-          <input type="text" id="name" placeholder="เช่น สมชาย ใจดี" required>
+          <input type="text" id="f_name" placeholder="เช่น สมชาย ใจดี">
         </div>
       </div>
       <div class="fg c2" style="margin-top:12px">
         <div class="fi">
           <label>ภาคเรียน <span class="req">*</span></label>
-          <select id="semester" required onchange="onSemChange()">
+          <select id="f_sem" onchange="onSemChange()">
             <option value="">-- เลือก --</option>
             <option value="1">ภาคเรียนที่ 1</option>
             <option value="2">ภาคเรียนที่ 2</option>
@@ -418,89 +299,69 @@ tr:hover td{background:#FFF8FB}
       </div>
       <div id="teacherBox" style="display:none"></div>
     </div>
-
-    <!-- Hour criteria info -->
     <div class="card" id="criteriaBox" style="display:none">
-      <div class="card-ttl">⏱ เกณฑ์ชั่วโมงกิจกรรม <span class="badge" id="critBadge">–</span></div>
+      <div class="cttl">⏱ เกณฑ์ชั่วโมงกิจกรรม <span class="badge" id="critBadge">–</span></div>
       <div id="critContent"></div>
     </div>
-
-    <div class="nav-btns">
-      <button class="btn btn-pri" onclick="nextStep(1)">ถัดไป →</button>
-    </div>
+    <div class="nb"><button class="btn btn-p" onclick="nextStep(1)">ถัดไป →</button></div>
   </div>
 
-  <!-- ═══ STEP 2 ═══ -->
+  <!-- STEP 2 -->
   <div class="sp" id="sp-2">
-
-    <!-- Hour meter -->
     <div class="card">
-      <div class="card-ttl">📊 สรุปชั่วโมงกิจกรรม</div>
-      <div class="hour-meter">
-        <div class="hm-title">
-          <span>ชั่วโมงที่ทำได้</span>
-          <span id="hmTotalTxt">0 / 0 ชั่วโมง</span>
-        </div>
-        <div class="hm-bar"><div class="hm-fill" id="hmFill" style="width:0%"></div></div>
-        <div class="hm-info">
+      <div class="cttl">📊 สรุปชั่วโมงกิจกรรม</div>
+      <div class="hm">
+        <div class="hmt"><span>ชั่วโมงที่ทำได้</span><span id="hmTxt">0 / 0 ชั่วโมง</span></div>
+        <div class="hmb"><div class="hmf err" id="hmFill"></div></div>
+        <div class="hmi">
           <span>เกณฑ์ผ่าน: <strong id="hmMin">–</strong> ชั่วโมง</span>
-          <span id="hmStatus" class="hm-status err">ยังไม่ผ่านเกณฑ์</span>
+          <span class="hms err" id="hmStatus">ยังไม่ผ่านเกณฑ์</span>
         </div>
       </div>
-      <div class="sec-ttl">กรอกกิจกรรมที่ทำ (กี่ครั้งก็ได้ แต่ต้องรวมชั่วโมงให้ถึงเกณฑ์)</div>
+      <div class="sttl">กรอกกิจกรรมที่ทำ — ทำกี่ครั้งก็ได้ แต่ชั่วโมงรวมต้องถึงเกณฑ์</div>
     </div>
-
-    <!-- Activity cards -->
     <div id="actCards"></div>
-
-    <div class="nav-btns">
-      <button class="btn btn-out" onclick="prevStep(2)">← ย้อนกลับ</button>
-      <button class="btn btn-pri" onclick="nextStep(2)">ตรวจสอบ →</button>
+    <div class="nb">
+      <button class="btn btn-o" onclick="prevStep(2)">← ย้อนกลับ</button>
+      <button class="btn btn-p" onclick="nextStep(2)">ตรวจสอบ →</button>
     </div>
   </div>
 
-  <!-- ═══ STEP 3 ═══ -->
+  <!-- STEP 3 -->
   <div class="sp" id="sp-3">
-    <div class="card" id="summaryCard">
-      <div class="card-ttl">🔍 ตรวจสอบข้อมูล <span class="badge">ขั้นตอนสุดท้าย</span></div>
-      <div id="summaryContent"></div>
+    <div class="card" id="sumCard">
+      <div class="cttl">🔍 ตรวจสอบข้อมูล <span class="badge">ขั้นตอนสุดท้าย</span></div>
+      <div id="sumContent"></div>
     </div>
-
     <div class="card" id="doneCard" style="display:none">
-      <div class="success" id="successBox">
+      <div class="suc" id="sucBox">
         <span class="sico">🎉</span>
         <h2>ส่งข้อมูลสำเร็จ!</h2>
         <p>ระบบรับข้อมูลแล้ว<br>PDF จะถูกสร้างและบันทึกลงใน Google Drive ของครู<br>ภายในไม่กี่นาที</p>
         <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-          <button class="btn btn-pri" onclick="resetForm()">📝 กรอกใหม่</button>
-          <button class="btn btn-out" onclick="switchPage('dash')">📊 ดูแดชบอร์ด</button>
+          <button class="btn btn-p" onclick="resetForm()">📝 กรอกใหม่</button>
+          <button class="btn btn-o" onclick="switchPage('dash')">📊 ดูแดชบอร์ด</button>
         </div>
       </div>
     </div>
-
-    <div class="nav-btns" id="subBtns">
-      <button class="btn btn-out" onclick="prevStep(3)">← ย้อนกลับแก้ไข</button>
-      <button class="btn btn-pri" id="subBtn" onclick="submitForm()">
+    <div class="nb" id="subBtns">
+      <button class="btn btn-o" onclick="prevStep(3)">← ย้อนกลับแก้ไข</button>
+      <button class="btn btn-p" id="subBtn" onclick="submitForm()">
         <span id="subTxt">📤 ส่งข้อมูล</span>
       </button>
     </div>
   </div>
+</div>
+</div>
 
-</div><!-- /form-wrap -->
-</div><!-- /page-form -->
-
-<!-- ════════════════════════════════
-     PAGE: DASHBOARD
-════════════════════════════════ -->
+<!-- ========== DASH PAGE ========== -->
 <div class="page" id="page-dash">
-<div class="dash-wrap">
-
-  <div class="dash-hdr">
+<div class="dw">
+  <div class="dhdr">
     <h2>📊 แดชบอร์ดสถิติกิจกรรมสาธารณประโยชน์</h2>
-    <p>โรงเรียนสา · ปีการศึกษา 2569</p>
+    <p>โรงเรียนสา จังหวัดน่าน · ปีการศึกษา 2569</p>
   </div>
-
-  <div class="dash-controls">
+  <div class="dctl">
     <select class="ds" id="dSem" onchange="loadDash()">
       <option value="1">ภาคเรียนที่ 1</option>
       <option value="2">ภาคเรียนที่ 2</option>
@@ -515,89 +376,58 @@ tr:hover td{background:#FFF8FB}
       <option>ม.1</option><option>ม.2</option><option>ม.3</option>
       <option>ม.4</option><option>ม.5</option><option>ม.6</option>
     </select>
-    <button class="refresh-btn" onclick="loadDash()">🔄 รีเฟรช</button>
+    <button class="rbtn" onclick="loadDash()">🔄 รีเฟรช</button>
   </div>
-
-  <!-- Stat cards -->
-  <div class="stat-grid">
-    <div class="stat-card c-all">
-      <div class="stat-num" id="sAll">–</div>
-      <div class="stat-label">ส่งทั้งหมด</div>
-      <div class="stat-sub">รายการทั้งหมด</div>
+  <div class="sg">
+    <div class="sc ca"><div class="snum" id="sAll">–</div><div class="slbl">ส่งทั้งหมด</div><div class="ssub">รายการทั้งหมด</div></div>
+    <div class="sc co"><div class="snum" id="sOk">–</div><div class="slbl">ผ่านเกณฑ์</div><div class="ssub" id="sOkS">–</div></div>
+    <div class="sc cf"><div class="snum" id="sFail">–</div><div class="slbl">ยังไม่ผ่าน</div><div class="ssub">ต้องส่งเพิ่ม</div></div>
+    <div class="sc cr"><div class="snum" id="sRate">–</div><div class="slbl">อัตราผ่าน</div><div class="ssub">เปอร์เซ็นต์</div></div>
+  </div>
+  <div class="cr2">
+    <div class="cc">
+      <div class="cttl2">การส่งงานแยกตามห้อง<span>ผ่าน / ไม่ผ่าน</span></div>
+      <div class="cbox"><canvas id="barChart"></canvas></div>
     </div>
-    <div class="stat-card c-ok">
-      <div class="stat-num" id="sOk">–</div>
-      <div class="stat-label">ผ่านเกณฑ์</div>
-      <div class="stat-sub" id="sOkSub">–</div>
-    </div>
-    <div class="stat-card c-fail">
-      <div class="stat-num" id="sFail">–</div>
-      <div class="stat-label">ยังไม่ผ่าน</div>
-      <div class="stat-sub" id="sFailSub">–</div>
-    </div>
-    <div class="stat-card c-rate">
-      <div class="stat-num" id="sRate">–</div>
-      <div class="stat-label">อัตราผ่าน</div>
-      <div class="stat-sub">เปอร์เซ็นต์</div>
+    <div class="cc">
+      <div class="cttl2">สัดส่วนผ่านเกณฑ์</div>
+      <div class="cbox"><canvas id="doughChart"></canvas></div>
     </div>
   </div>
-
-  <!-- Charts -->
-  <div class="chart-row">
-    <div class="chart-card">
-      <div class="chart-ttl">การส่งงานแยกตามห้อง <span>แสดงผ่าน / ไม่ผ่าน</span></div>
-      <div class="chart-box"><canvas id="barChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-ttl">สัดส่วนผ่านเกณฑ์</div>
-      <div class="chart-box"><canvas id="doughChart"></canvas></div>
-    </div>
-  </div>
-
-  <!-- Table -->
-  <div class="tbl-card">
-    <div class="tbl-top">รายงานแยกตามห้องเรียน <span id="tblSub">–</span></div>
-    <div class="tbl-scroll">
+  <div class="tc">
+    <div class="tt">รายงานแยกตามห้องเรียน<span id="tblSub">–</span></div>
+    <div class="ts">
       <table>
         <thead>
           <tr>
-            <th>ชั้น/ห้อง</th>
-            <th>ครูที่ปรึกษา</th>
-            <th>ส่งแล้ว</th>
-            <th>ผ่านเกณฑ์</th>
-            <th>ยังไม่ผ่าน</th>
-            <th>เฉลี่ยชั่วโมง</th>
-            <th>อัตราผ่าน</th>
-            <th>สถานะ</th>
+            <th>ชั้น/ห้อง</th><th>ครูที่ปรึกษา</th><th>ส่งแล้ว</th>
+            <th>ผ่านเกณฑ์</th><th>ยังไม่ผ่าน</th><th>เฉลี่ยชั่วโมง</th>
+            <th>อัตราผ่าน</th><th>สถานะ</th>
           </tr>
         </thead>
         <tbody id="dashTbl"></tbody>
       </table>
     </div>
   </div>
-
-</div><!-- /dash-wrap -->
-</div><!-- /page-dash -->
+</div>
+</div>
 
 <div class="toast" id="toast"><span id="tIco">✅</span><span id="tMsg"></span></div>
 
 <script>
-/* ══════════════════════════════════════════════
-   CONFIG
-══════════════════════════════════════════════ */
+// ============================================================
+// CONFIG
+// ============================================================
 var GAS_URL = 'https://script.google.com/macros/s/AKfycbxwkaC9hXedQ7sPHvczP99JFFzUZsPyx_3rVFr2sNVJuXk_elqY7cyliau4bMOe863urw/exec';
 
-/* เกณฑ์ชั่วโมง */
 var CRITERIA = {
-  junior: { total:15, min:{1:7,  2:8}  },   // ม.1-3
-  senior: { total:20, min:{1:10, 2:10} }    // ม.4-6
+  junior: { total:15, min:{'1':7,  '2':8}  },
+  senior: { total:20, min:{'1':10, '2':10} }
 };
 
-function getLevel(grade){
-  return ['ม.1','ม.2','ม.3'].includes(grade) ? 'junior' : 'senior';
-}
+var ACT_CLS  = ['n1','n2','n3','n4','n5'];
+var ACT_EMO  = ['🌱','🌿','🍃','🌾','🌻'];
 
-/* ═══ TEACHER MAP ═══ */
 var TM = {
   "ม.1/1":["นางมณีรัตน์ ตาดี","นายธัชชัย ตาลตา"],
   "ม.1/2":["นางสาวจินต์ชัญญา อิทธิประเวศน์","นายรธิป โพธิพัฒน์"],
@@ -642,406 +472,394 @@ var TM = {
   "ม.6/4":["นายเกรียงไกร คำมอญ","นางนงคราญ เจริญพงษ์"],
   "ม.6/5":["นางสาวสุภาพรรณ สิทธิวงศ์","นางสาวชัญญ์อนนต์ คันนาทิพย์"],
   "ม.6/6":["นางภัทราปภา บัวอาจ",""],
-  "ม.6/7":["นางสาวกัญญา โชคสวัสดิ์ภิญโญ",""],
+  "ม.6/7":["นางสาวกัญญา โชคสวัสดิ์ภิญโญ",""]
 };
 
-/* ══════════════════════════════════════════════
-   PAGE SWITCH
-══════════════════════════════════════════════ */
-function switchPage(p){
-  document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active')});
-  document.querySelectorAll('.nav-tab').forEach(function(el){el.classList.remove('active')});
-  document.getElementById('page-'+p).classList.add('active');
-  document.querySelectorAll('.nav-tab')[p==='form'?0:1].classList.add('active');
-  if(p==='dash') loadDash();
+// ============================================================
+// HELPERS
+// ============================================================
+function getLevel(g) {
+  return ['ม.1','ม.2','ม.3'].indexOf(g) >= 0 ? 'junior' : 'senior';
 }
 
-/* ══════════════════════════════════════════════
-   FORM LOGIC
-══════════════════════════════════════════════ */
+function v(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function fmtDate(iso) {
+  if (!iso) return '-';
+  var p = iso.split('-');
+  if (p.length !== 3) return iso;
+  return p[2] + '/' + p[1] + '/' + (parseInt(p[0]) + 543);
+}
+
+function toast(msg, isErr) {
+  var t = document.getElementById('toast');
+  document.getElementById('tMsg').textContent = msg;
+  document.getElementById('tIco').textContent = isErr ? '⚠️' : '✅';
+  t.className = 'toast' + (isErr ? ' err' : '') + ' show';
+  setTimeout(function() { t.classList.remove('show'); }, 3500);
+}
+
+// ============================================================
+// PAGE SWITCH
+// ============================================================
+function switchPage(p) {
+  document.querySelectorAll('.page').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('page-' + p).classList.add('active');
+  document.querySelectorAll('.nav-tab')[p === 'form' ? 0 : 1].classList.add('active');
+  if (p === 'dash') { loadDash(); }
+}
+
+// ============================================================
+// FORM — STEP NAVIGATION
+// ============================================================
 var curStep = 1;
-var semVal = '';
-var gradeVal = '';
 
-var ACT_COLORS = ['n1','n2','n3','n4','n5'];
-var ACT_EMOJIS = ['🌱','🌿','🍃','🌾','🌻'];
-
-function updateProg(){
-  var pct = Math.round(((curStep-1)/2)*100);
-  document.getElementById('progFill').style.width = pct+'%';
-  document.getElementById('progPct').textContent  = pct+'%';
-  document.getElementById('progTxt').textContent  = 'ขั้นตอนที่ '+curStep+' จาก 3';
-  document.querySelectorAll('.pdot').forEach(function(d,i){
-    d.classList.remove('active','done');
-    if(i+1===curStep) d.classList.add('active');
-    else if(i+1<curStep) d.classList.add('done');
+function updProg() {
+  var pct = Math.round(((curStep - 1) / 2) * 100);
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pPct').textContent = pct + '%';
+  document.getElementById('pTxt').textContent = 'ขั้นตอนที่ ' + curStep + ' จาก 3';
+  document.querySelectorAll('.pdot').forEach(function(d, i) {
+    d.classList.remove('active', 'done');
+    if (i + 1 === curStep) { d.classList.add('active'); }
+    else if (i + 1 < curStep) { d.classList.add('done'); }
   });
 }
 
-function goStep(n){
-  if(n>=curStep) return;
-  document.getElementById('sp-'+curStep).classList.remove('active');
-  curStep=n;
-  document.getElementById('sp-'+curStep).classList.add('active');
-  updateProg();
-  window.scrollTo({top:0,behavior:'smooth'});
+function goStep(n) {
+  if (n >= curStep) { return; }
+  document.getElementById('sp-' + curStep).classList.remove('active');
+  curStep = n;
+  document.getElementById('sp-' + curStep).classList.add('active');
+  updProg();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function nextStep(from){
-  if(!validateStep(from)) return;
-  if(from===2) buildSummary();
-  document.getElementById('sp-'+from).classList.remove('active');
-  curStep=from+1;
-  document.getElementById('sp-'+curStep).classList.add('active');
-  updateProg();
-  window.scrollTo({top:0,behavior:'smooth'});
+function nextStep(from) {
+  if (!validateStep(from)) { return; }
+  if (from === 2) { buildSummary(); }
+  document.getElementById('sp-' + from).classList.remove('active');
+  curStep = from + 1;
+  document.getElementById('sp-' + curStep).classList.add('active');
+  updProg();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function prevStep(from){
-  document.getElementById('sp-'+from).classList.remove('active');
-  curStep=from-1;
-  document.getElementById('sp-'+curStep).classList.add('active');
-  updateProg();
-  window.scrollTo({top:0,behavior:'smooth'});
+function prevStep(from) {
+  document.getElementById('sp-' + from).classList.remove('active');
+  curStep = from - 1;
+  document.getElementById('sp-' + curStep).classList.add('active');
+  updProg();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function v(id){ return (document.getElementById(id)||{}).value||''; }
-
-function validateStep(step){
-  if(step===1){
-    var req=['grade','room','no','prefix','name','semester'];
-    for(var i=0;i<req.length;i++){
-      if(!v(req[i])){ toast('กรุณากรอกข้อมูลนักเรียนให้ครบ',true); return false; }
-    }
-  }
-  if(step===2){
-    // ตรวจกิจกรรมที่กรอกบางส่วน — ถ้าเริ่มกรอกต้องกรอกให้ครบ
-    var hasAny = false;
-    for(var n=1;n<=5;n++){
-      var d=v('date'+n), h=v('hours'+n), det=v('detail'+n), res=v('result'+n);
-      var hasSome = d||h||det||res;
-      if(!hasSome) continue; // ว่างทั้งหมด = ไม่ได้ทำ ข้ามได้
-      hasAny = true;
-      // มีบางส่วน → ต้องกรอกให้ครบ
-      if(!d)  { toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกวันที่',true); openActBody(n); return false; }
-      if(!h)  { toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกจำนวนชั่วโมง',true); openActBody(n); return false; }
-      if(!det){ toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกรายการกิจกรรม',true); openActBody(n); return false; }
-      if(!res){ toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกผลการดำเนินงาน',true); openActBody(n); return false; }
-      if(parseFloat(h)<=0){ toast('กิจกรรมครั้งที่ '+n+': ชั่วโมงต้องมากกว่า 0',true); return false; }
-    }
-    if(!hasAny){ toast('กรุณากรอกอย่างน้อย 1 กิจกรรม',true); return false; }
-
-    // ตรวจเกณฑ์ชั่วโมง
-    var g=v('grade'), s=parseInt(v('semester'));
-    if(g && s){
-      var lv=getLevel(g), cr=CRITERIA[lv];
-      var minH=cr.min[s]||cr.min[1];
-      var got=getTotalHours();
-      if(got < minH){
-        toast('ชั่วโมงรวม '+got.toFixed(1)+' ชม. ยังไม่ถึงเกณฑ์ '+minH+' ชม. กรุณาเพิ่มกิจกรรม',true);
+// ============================================================
+// FORM — VALIDATE
+// ============================================================
+function validateStep(step) {
+  if (step === 1) {
+    var req = ['f_grade', 'f_room', 'f_no', 'f_prefix', 'f_name', 'f_sem'];
+    for (var i = 0; i < req.length; i++) {
+      if (!v(req[i])) {
+        toast('กรุณากรอกข้อมูลนักเรียนให้ครบ', true);
         return false;
       }
     }
+    return true;
+  }
+  if (step === 2) {
+    var hasAny = false;
+    for (var n = 1; n <= 5; n++) {
+      var d   = v('a_date' + n);
+      var h   = v('a_hrs'  + n);
+      var det = v('a_det'  + n);
+      var res = v('a_res'  + n);
+      var hasSome = d || h || det || res;
+      if (!hasSome) { continue; }
+      hasAny = true;
+      if (!d)   { toast('กิจกรรมครั้งที่ ' + n + ': กรุณากรอกวันที่', true);           openAct(n); return false; }
+      if (!h)   { toast('กิจกรรมครั้งที่ ' + n + ': กรุณากรอกจำนวนชั่วโมง', true);    openAct(n); return false; }
+      if (!det) { toast('กิจกรรมครั้งที่ ' + n + ': กรุณากรอกรายการกิจกรรม', true);  openAct(n); return false; }
+      if (!res) { toast('กิจกรรมครั้งที่ ' + n + ': กรุณากรอกผลการดำเนินงาน', true); openAct(n); return false; }
+      if (parseFloat(h) <= 0) { toast('กิจกรรมครั้งที่ ' + n + ': ชั่วโมงต้องมากกว่า 0', true); return false; }
+    }
+    if (!hasAny) { toast('กรุณากรอกอย่างน้อย 1 กิจกรรม', true); return false; }
+    var g = v('f_grade'), s = v('f_sem');
+    if (g && s) {
+      var lv = getLevel(g), minH = CRITERIA[lv].min[s];
+      var got = getTotalHours();
+      if (got < minH) {
+        toast('ชั่วโมงรวม ' + got.toFixed(1) + ' ชม. ยังไม่ถึงเกณฑ์ ' + minH + ' ชม.', true);
+        return false;
+      }
+    }
+    return true;
   }
   return true;
 }
 
-/* ── Grade / Room change ── */
-function onGradeChange(){
-  gradeVal = v('grade');
+// ============================================================
+// FORM — GRADE/ROOM/SEM CHANGE
+// ============================================================
+function onGradeChange() {
   updateTeacherBox();
   updateCriteria();
-  buildActUI();
+  buildActCards();
 }
-function onRoomChange(){ updateTeacherBox(); }
-function onSemChange(){
-  semVal = v('semester');
+
+function onRoomChange() {
+  updateTeacherBox();
+}
+
+function onSemChange() {
   updateCriteria();
   updateHourMeter();
 }
 
-function updateTeacherBox(){
-  var g=v('grade'), r=v('room'), key=g+'/'+r;
-  var box=document.getElementById('teacherBox');
-  var t=TM[key];
-  if(t && g && r){
-    var names=t.filter(Boolean).join(' · ');
-    box.innerHTML='<div class="teacher-box">🎓 ครูที่ปรึกษา: <strong>'+names+'</strong></div>';
-    box.style.display='block';
-  } else { box.style.display='none'; }
+function updateTeacherBox() {
+  var g = v('f_grade'), r = v('f_room'), key = g + '/' + r;
+  var box = document.getElementById('teacherBox');
+  var t = TM[key];
+  if (t && g && r) {
+    box.innerHTML = '<div class="tbox">🎓 ครูที่ปรึกษา: <strong>' + t.filter(Boolean).join(' · ') + '</strong></div>';
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
 }
 
-function updateCriteria(){
-  var g=v('grade'), s=parseInt(v('semester'));
-  var box=document.getElementById('criteriaBox');
-  if(!g||!s){ box.style.display='none'; return; }
-  var lv=getLevel(g), cr=CRITERIA[lv];
-  var lvTxt = lv==='junior' ? 'ม.ต้น (ม.1-3)' : 'ม.ปลาย (ม.4-6)';
-  document.getElementById('critBadge').textContent=lvTxt;
-  var minH=cr.min[s];
+function updateCriteria() {
+  var g = v('f_grade'), s = parseInt(v('f_sem'));
+  var box = document.getElementById('criteriaBox');
+  if (!g || !s) { box.style.display = 'none'; return; }
+  var lv = getLevel(g), cr = CRITERIA[lv];
+  var lvTxt = lv === 'junior' ? 'ม.ต้น (ม.1-3)' : 'ม.ปลาย (ม.4-6)';
+  document.getElementById('critBadge').textContent = lvTxt;
+  var minH = cr.min[String(s)];
   document.getElementById('critContent').innerHTML =
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.83rem">'+
-    '<div style="background:var(--cr);border-radius:var(--rs);padding:10px 14px">'+
-    '<div style="font-weight:700;color:var(--tx2);margin-bottom:4px">เกณฑ์ผ่านภาคนี้</div>'+
-    '<div style="font-size:1.4rem;font-weight:800;color:var(--pk2)">'+minH+' ชั่วโมง</div></div>'+
-    '<div style="background:var(--cr);border-radius:var(--rs);padding:10px 14px">'+
-    '<div style="font-weight:700;color:var(--tx2);margin-bottom:4px">เวลารวมทั้งปี</div>'+
-    '<div style="font-size:1.4rem;font-weight:800;color:var(--tx)">'+cr.total+' ชั่วโมง</div></div>'+
-    '</div>';
-  box.style.display='block';
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.83rem">' +
+    '<div style="background:var(--cr);border-radius:var(--rs);padding:10px 14px">' +
+    '<div style="font-weight:700;color:var(--tx2);margin-bottom:4px">เกณฑ์ผ่านภาคนี้</div>' +
+    '<div style="font-size:1.4rem;font-weight:800;color:var(--pk2)">' + minH + ' ชั่วโมง</div></div>' +
+    '<div style="background:var(--cr);border-radius:var(--rs);padding:10px 14px">' +
+    '<div style="font-weight:700;color:var(--tx2);margin-bottom:4px">เวลารวมทั้งปี</div>' +
+    '<div style="font-size:1.4rem;font-weight:800;color:var(--tx)">' + cr.total + ' ชั่วโมง</div></div></div>';
+  box.style.display = 'block';
 }
 
-/* ── Activity UI builder — แสดงทุกกิจกรรมเลย ไม่มี toggle ── */
-function buildActUI(){
-  buildActCards();
-}
-
-function buildActCards(){
-  var html='';
-  for(var n=1;n<=5;n++){
-    html+=
-      '<div class="act-card" id="actCard'+n+'">'+
-        '<div class="act-hdr" onclick="toggleActBody('+n+')">'+
-          '<div class="act-num '+ACT_COLORS[n-1]+'">'+n+'</div>'+
-          '<div class="act-hdr-txt">'+
-            '<h3>'+ACT_EMOJIS[n-1]+' กิจกรรมครั้งที่ '+n+'</h3>'+
-            '<p id="actSub'+n+'">กรอกรายละเอียดกิจกรรม (ไม่บังคับถ้าไม่ได้ทำ)</p>'+
-          '</div>'+
-          '<span class="act-toggle'+(n===1?' open':'')+'" id="actArr'+n+'">▼</span>'+
-        '</div>'+
-        '<div class="act-body'+(n===1?' open':'')+'" id="actBody'+n+'">'+
-          '<div class="fg c2">'+
-            '<div class="fi"><label>📅 วัน/เดือน/ปี</label>'+
-            '<input type="date" id="date'+n+'" oninput="updateActSub('+n+');updateHourMeter()"></div>'+
-            '<div class="fi"><label>⏱ จำนวนชั่วโมง</label>'+
-            '<input type="number" id="hours'+n+'" min="0.5" max="24" step="0.5" placeholder="เช่น 3" oninput="updateHourMeter()"></div>'+
-          '</div>'+
-          '<div class="fg" style="margin-top:11px">'+
-            '<div class="fi"><label>📝 รายการกิจกรรม (รายละเอียด)</label>'+
-            '<textarea id="detail'+n+'" placeholder="อธิบายรายละเอียดกิจกรรมที่ทำ..."></textarea></div>'+
-            '<div class="fi"><label>✅ ผลการดำเนินกิจกรรม</label>'+
-            '<textarea id="result'+n+'" placeholder="สรุปผลที่ได้..."></textarea></div>'+
-            '<div class="fi"><label>🖊 ลงชื่อผู้รับรอง</label>'+
-            '<input type="text" id="appr'+n+'" placeholder="ชื่อผู้รับรอง"></div>'+
-          '</div>'+
-          '<div class="fi" style="margin-top:11px"><label>📷 รูปภาพการจัดกิจกรรม</label>'+
-          '<div class="upzone" id="upz'+n+'">'+
-            '<input type="file" accept="image/*" onchange="previewImg(this,\'prev'+n+'\',\'upz'+n+'\')">'+
-            '<div class="uico">🖼️</div><p>คลิกหรือลากรูปมาวาง</p>'+
-            '<img id="prev'+n+'" class="prev">'+
-          '</div></div>'+
-        '</div>'+
+// ============================================================
+// FORM — ACTIVITY CARDS
+// ============================================================
+function buildActCards() {
+  var html = '';
+  for (var n = 1; n <= 5; n++) {
+    var isFirst = (n === 1);
+    html +=
+      '<div class="ac" id="ac' + n + '">' +
+        '<div class="ach" onclick="toggleAct(' + n + ')">' +
+          '<div class="acn ' + ACT_CLS[n-1] + '">' + n + '</div>' +
+          '<div class="ach-txt">' +
+            '<h3>' + ACT_EMO[n-1] + ' กิจกรรมครั้งที่ ' + n + '</h3>' +
+            '<p id="asub' + n + '">กรอกรายละเอียดกิจกรรม (ข้ามได้ถ้าไม่ได้ทำ)</p>' +
+          '</div>' +
+          '<span class="arr' + (isFirst ? ' open' : '') + '" id="arr' + n + '">▼</span>' +
+        '</div>' +
+        '<div class="acb' + (isFirst ? ' open' : '') + '" id="acb' + n + '">' +
+          '<div class="fg c2">' +
+            '<div class="fi"><label>📅 วัน/เดือน/ปี</label>' +
+            '<input type="date" id="a_date' + n + '" oninput="updActSub(' + n + ');updateHourMeter()"></div>' +
+            '<div class="fi"><label>⏱ จำนวนชั่วโมง</label>' +
+            '<input type="number" id="a_hrs' + n + '" min="0.5" max="24" step="0.5" placeholder="เช่น 3" oninput="updateHourMeter()"></div>' +
+          '</div>' +
+          '<div class="fg" style="margin-top:11px">' +
+            '<div class="fi"><label>📝 รายการกิจกรรม (รายละเอียด)</label>' +
+            '<textarea id="a_det' + n + '" placeholder="อธิบายรายละเอียดกิจกรรม..." oninput="updateHourMeter()"></textarea></div>' +
+            '<div class="fi"><label>✅ ผลการดำเนินกิจกรรม</label>' +
+            '<textarea id="a_res' + n + '" placeholder="สรุปผลที่ได้..."></textarea></div>' +
+            '<div class="fi"><label>🖊 ลงชื่อผู้รับรอง</label>' +
+            '<input type="text" id="a_apr' + n + '" placeholder="ชื่อผู้รับรอง"></div>' +
+          '</div>' +
+          '<div class="fi" style="margin-top:11px"><label>📷 รูปภาพการจัดกิจกรรม</label>' +
+          '<div class="upz" id="upz' + n + '">' +
+            '<input type="file" accept="image/*" onchange="prevImg(this,' + n + ')">' +
+            '<div class="uico">🖼️</div><p>คลิกหรือลากรูปมาวาง</p>' +
+            '<img id="prev' + n + '" class="prev">' +
+          '</div></div>' +
+        '</div>' +
       '</div>';
   }
-  document.getElementById('actCards').innerHTML=html;
+  document.getElementById('actCards').innerHTML = html;
 }
 
-/* เปิด act body (ใช้ตอน validate error) */
-function openActBody(n){
-  var body=document.getElementById('actBody'+n);
-  var arr=document.getElementById('actArr'+n);
-  if(body){ body.classList.add('open'); }
-  if(arr){ arr.classList.add('open'); }
-  // scroll ไปหา
-  var card=document.getElementById('actCard'+n);
-  if(card) card.scrollIntoView({behavior:'smooth', block:'center'});
+function toggleAct(n) {
+  var b = document.getElementById('acb' + n);
+  var a = document.getElementById('arr' + n);
+  var isOpen = b.classList.contains('open');
+  b.classList.toggle('open', !isOpen);
+  a.classList.toggle('open', !isOpen);
 }
 
-function toggleActBody(n){
-  var body=document.getElementById('actBody'+n);
-  var arr=document.getElementById('actArr'+n);
-  var open=body.classList.contains('open');
-  body.classList.toggle('open',!open);
-  arr.classList.toggle('open',!open);
+function openAct(n) {
+  document.getElementById('acb' + n).classList.add('open');
+  document.getElementById('arr' + n).classList.add('open');
+  var el = document.getElementById('ac' + n);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 }
 
-function updateActSub(n){
-  var d=v('date'+n), h=v('hours'+n);
-  var sub=document.getElementById('actSub'+n);
-  if(d&&h) sub.textContent=fmtDate(d)+' · '+h+' ชั่วโมง';
+function updActSub(n) {
+  var d = v('a_date' + n), h = v('a_hrs' + n);
+  var sub = document.getElementById('asub' + n);
+  if (sub && d && h) { sub.textContent = fmtDate(d) + ' · ' + h + ' ชั่วโมง'; }
 }
 
-function updateHourMeter(){
-  var g=v('grade'), s=parseInt(v('semester'));
-  if(!g||!s) return;
-  var lv=getLevel(g), cr=CRITERIA[lv];
-  var minH=cr.min[s]||cr.min[1];
-/* ── นับชั่วโมงรวมเฉพาะกิจกรรมที่กรอกข้อมูล ── */
-function getTotalHours(){
-  var got=0;
-  for(var n=1;n<=5;n++){
-    if(v('hours'+n) && v('detail'+n)) got+=parseFloat(v('hours'+n))||0;
+// ============================================================
+// FORM — HOUR METER
+// ============================================================
+function getTotalHours() {
+  var got = 0;
+  for (var n = 1; n <= 5; n++) {
+    var h   = v('a_hrs' + n);
+    var det = v('a_det' + n);
+    if (h && det) { got += parseFloat(h) || 0; }
   }
   return got;
 }
 
-function updateHourMeter(){
-  var g=v('grade'), s=parseInt(v('semester'));
-  if(!g||!s) return;
-  var lv=getLevel(g), cr=CRITERIA[lv];
-  var minH=cr.min[s]||cr.min[1];
-  var got=getTotalHours();
-  var pct=Math.min(100,(got/minH)*100);
-  var cls=got>=minH?'ok':got>=(minH*0.5)?'warn':'err';
-  document.getElementById('hmFill').style.width=pct+'%';
-  document.getElementById('hmFill').className='hm-fill '+cls;
-  document.getElementById('hmTotalTxt').textContent=got.toFixed(1)+' / '+minH+' ชั่วโมง';
-  document.getElementById('hmMin').textContent=minH;
-  var stEl=document.getElementById('hmStatus');
-  if(got>=minH){ stEl.textContent='✅ ผ่านเกณฑ์'; stEl.className='hm-status ok'; }
-  else if(got>0){ stEl.textContent='⚠️ ยังขาดอีก '+(minH-got).toFixed(1)+' ชั่วโมง'; stEl.className='hm-status warn'; }
-  else { stEl.textContent='❌ ยังไม่ผ่านเกณฑ์'; stEl.className='hm-status err'; }
-}
-
-/* ── Image preview ── */
-function previewImg(inp,prevId,zoneId){
-  if(!inp.files||!inp.files[0]) return;
-  var r=new FileReader();
-  r.onload=function(e){
-    var img=document.getElementById(prevId);
-    img.src=e.target.result; img.style.display='block';
-    document.getElementById(zoneId).querySelector('.uico').style.display='none';
-    document.getElementById(zoneId).querySelector('p').style.display='none';
-  };
-  r.readAsDataURL(inp.files[0]);
-}
-
-/* ── Date helpers ── */
-function fmtDate(iso){
-  if(!iso) return '-';
-  var p=iso.split('-');
-  return p[2]+'/'+p[1]+'/'+(parseInt(p[0])+543);
-}
-
-/* ── Summary ── */
-function buildSummary(){
-  var g=v('grade'), r=v('room'), t=TM[g+'/'+r]||[];
-  var sem=v('semester'), lv=getLevel(g), cr=CRITERIA[lv];
-  var minH=cr.min[parseInt(sem)]||cr.min[1];
-  var got=getTotalHours();
-  var passClass=got>=minH?'ok':'fail';
-  var passText =got>=minH?'✅ ผ่านเกณฑ์':'❌ ยังไม่ผ่านเกณฑ์';
-
-  var h='';
-  h+='<div class="sum-row"><span class="sum-key">ชั้น/ห้อง</span><span class="sum-val">'+g+'/'+r+'</span></div>';
-  h+='<div class="sum-row"><span class="sum-key">เลขที่</span><span class="sum-val">'+v('no')+'</span></div>';
-  h+='<div class="sum-row"><span class="sum-key">ชื่อ-นามสกุล</span><span class="sum-val">'+v('prefix')+' '+v('name')+'</span></div>';
-  h+='<div class="sum-row"><span class="sum-key">ภาคเรียน</span><span class="sum-val">'+sem+'/2569</span></div>';
-  h+='<div class="sum-row"><span class="sum-key">ครูที่ปรึกษา</span><span class="sum-val">'+(t.filter(Boolean).join(' · ')||'-')+'</span></div>';
-  h+='<div class="sum-row"><span class="sum-key">รวมชั่วโมง</span><span class="sum-val">'+got.toFixed(1)+' ชั่วโมง &nbsp;<span class="pill '+passClass+'">'+passText+'</span></span></div>';
-  for(var n=1;n<=5;n++){
-    // แสดงเฉพาะกิจกรรมที่กรอกข้อมูล
-    if(!v('detail'+n)&&!v('date'+n)) continue;
-    h+='<div class="sum-act"><h4>'+ACT_EMOJIS[n-1]+' กิจกรรมครั้งที่ '+n+'</h4>';
-    h+='<div class="sum-row"><span class="sum-key">วันที่</span><span class="sum-val">'+fmtDate(v('date'+n))+'</span></div>';
-    h+='<div class="sum-row"><span class="sum-key">ชั่วโมง</span><span class="sum-val">'+(v('hours'+n)||'-')+' ชั่วโมง</span></div>';
-    h+='<div class="sum-row"><span class="sum-key">รายการกิจกรรม</span><span class="sum-val">'+v('detail'+n)+'</span></div>';
-    h+='<div class="sum-row"><span class="sum-key">ผลการดำเนินงาน</span><span class="sum-val">'+(v('result'+n)||'-')+'</span></div>';
-    if(v('appr'+n)) h+='<div class="sum-row"><span class="sum-key">ผู้รับรอง</span><span class="sum-val">'+v('appr'+n)+'</span></div>';
-    h+='</div>';
+function updateHourMeter() {
+  var g = v('f_grade'), s = v('f_sem');
+  if (!g || !s) { return; }
+  var lv  = getLevel(g);
+  var minH = CRITERIA[lv].min[s] || CRITERIA[lv].min['1'];
+  var got  = getTotalHours();
+  var pct  = Math.min(100, (got / minH) * 100);
+  var cls  = got >= minH ? 'ok' : got >= (minH * 0.5) ? 'warn' : 'err';
+  var fill = document.getElementById('hmFill');
+  var stat = document.getElementById('hmStatus');
+  fill.style.width = pct + '%';
+  fill.className = 'hmf ' + cls;
+  document.getElementById('hmTxt').textContent = got.toFixed(1) + ' / ' + minH + ' ชั่วโมง';
+  document.getElementById('hmMin').textContent = minH;
+  if (got >= minH) {
+    stat.textContent = '✅ ผ่านเกณฑ์';
+    stat.className = 'hms ok';
+  } else if (got > 0) {
+    stat.textContent = '⚠️ ยังขาดอีก ' + (minH - got).toFixed(1) + ' ชั่วโมง';
+    stat.className = 'hms warn';
+  } else {
+    stat.textContent = '❌ ยังไม่ผ่านเกณฑ์';
+    stat.className = 'hms err';
   }
-  document.getElementById('summaryContent').innerHTML=h;
 }
 
-/* ── Submit ── */
-// ── อัปโหลดรูปเดี่ยว → GAS → ได้ Drive File ID กลับมา ──────────
-function uploadImageToGAS(file, slotNum) {
-  return new Promise(function(resolve) {
-    if (!file) { resolve(null); return; }
-
-    // compress ก่อนส่ง — resize ให้ไม่เกิน 1200px และ quality 0.75
-    var img = new Image();
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      img.onload = function() {
-        var MAX = 1200;
-        var w = img.width, h = img.height;
-        if (w > MAX || h > MAX) {
-          var ratio = Math.min(MAX/w, MAX/h);
-          w = Math.round(w * ratio);
-          h = Math.round(h * ratio);
-        }
-        var canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        var base64 = canvas.toDataURL('image/jpeg', 0.75); // ~ลดขนาด 70-80%
-
-        // ส่ง base64 ไป GAS endpoint uploadImage
-        fetch(GAS_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'uploadImage',
-            slot: slotNum,
-            filename: file.name || ('image'+slotNum+'.jpg'),
-            base64: base64,
-          })
-        })
-        .then(function() {
-          // no-cors ไม่อ่าน response ได้ — ส่ง base64 กลับไปใช้ใน payload โดยตรง
-          resolve(base64);
-        })
-        .catch(function() { resolve(base64); });
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
+// ============================================================
+// FORM — IMAGE PREVIEW
+// ============================================================
+function prevImg(inp, n) {
+  if (!inp.files || !inp.files[0]) { return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = document.getElementById('prev' + n);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    var z = document.getElementById('upz' + n);
+    z.querySelector('.uico').style.display = 'none';
+    z.querySelector('p').style.display = 'none';
+  };
+  reader.readAsDataURL(inp.files[0]);
 }
 
-function submitForm(){
-  var btn=document.getElementById('subBtn');
-  btn.disabled=true;
-  document.getElementById('subTxt').innerHTML='<span class="spin"></span> กำลังส่ง...';
+// ============================================================
+// FORM — SUMMARY
+// ============================================================
+function buildSummary() {
+  var g   = v('f_grade'), r = v('f_room'), t = TM[g + '/' + r] || [];
+  var sem = v('f_sem'), lv = getLevel(g), cr = CRITERIA[lv];
+  var minH = cr.min[sem] || cr.min['1'];
+  var got  = getTotalHours();
+  var pCls = got >= minH ? 'ok' : 'fail';
+  var pTxt = got >= minH ? '✅ ผ่านเกณฑ์' : '❌ ยังไม่ผ่านเกณฑ์';
+  var h = '';
+  h += '<div class="sr"><span class="sk2">ชั้น/ห้อง</span><span class="sv">' + g + '/' + r + '</span></div>';
+  h += '<div class="sr"><span class="sk2">เลขที่</span><span class="sv">' + v('f_no') + '</span></div>';
+  h += '<div class="sr"><span class="sk2">ชื่อ-นามสกุล</span><span class="sv">' + v('f_prefix') + ' ' + v('f_name') + '</span></div>';
+  h += '<div class="sr"><span class="sk2">ภาคเรียน</span><span class="sv">' + sem + '/2569</span></div>';
+  h += '<div class="sr"><span class="sk2">ครูที่ปรึกษา</span><span class="sv">' + (t.filter(Boolean).join(' · ') || '-') + '</span></div>';
+  h += '<div class="sr"><span class="sk2">รวมชั่วโมง</span><span class="sv">' + got.toFixed(1) + ' ชม. &nbsp;<span class="pill ' + pCls + '">' + pTxt + '</span></span></div>';
+  for (var n = 1; n <= 5; n++) {
+    var det = v('a_det' + n), dat = v('a_date' + n);
+    if (!det && !dat) { continue; }
+    h += '<div class="sa"><h4>' + ACT_EMO[n-1] + ' กิจกรรมครั้งที่ ' + n + '</h4>';
+    h += '<div class="sr"><span class="sk2">วันที่</span><span class="sv">' + fmtDate(dat) + '</span></div>';
+    h += '<div class="sr"><span class="sk2">ชั่วโมง</span><span class="sv">' + (v('a_hrs' + n) || '-') + ' ชั่วโมง</span></div>';
+    h += '<div class="sr"><span class="sk2">รายการกิจกรรม</span><span class="sv">' + det + '</span></div>';
+    h += '<div class="sr"><span class="sk2">ผลการดำเนินงาน</span><span class="sv">' + (v('a_res' + n) || '-') + '</span></div>';
+    var apr = v('a_apr' + n);
+    if (apr) { h += '<div class="sr"><span class="sk2">ผู้รับรอง</span><span class="sv">' + apr + '</span></div>'; }
+    h += '</div>';
+  }
+  document.getElementById('sumContent').innerHTML = h;
+}
 
-  var g=v('grade'),r=v('room'),t=TM[g+'/'+r]||[];
-  var sem=v('semester'), lv=getLevel(g), cr=CRITERIA[lv];
-  var minH=cr.min[parseInt(sem)]||cr.min[1];
-  var got=getTotalHours();
+// ============================================================
+// FORM — SUBMIT
+// ============================================================
+function submitForm() {
+  var btn = document.getElementById('subBtn');
+  btn.disabled = true;
+  document.getElementById('subTxt').innerHTML = '<span class="spin"></span> กำลังส่ง...';
 
-  var payload={
-    action:'submitActivity',
+  var g   = v('f_grade'), r = v('f_room'), t = TM[g + '/' + r] || [];
+  var sem = v('f_sem'), lv = getLevel(g), cr = CRITERIA[lv];
+  var minH = cr.min[sem] || cr.min['1'];
+  var got  = getTotalHours();
+
+  var payload = {
+    action: 'submitActivity',
     timestamp: new Date().toLocaleString('th-TH'),
-    grade:g, room:r, studentId:v('no'), prefix:v('prefix'), fullname:v('name'),
-    semester:sem, academicYear:'2569',
-    teacher1:t[0]||'', teacher2:t[1]||'',
+    grade: g, room: r, studentId: v('f_no'),
+    prefix: v('f_prefix'), fullname: v('f_name'),
+    semester: sem, academicYear: '2569',
+    teacher1: t[0] || '', teacher2: t[1] || '',
     totalHours: got.toFixed(1),
-    passed: got>=minH ? 'ผ่าน' : 'ไม่ผ่าน',
-    level: lv==='junior'?'ม.ต้น':'ม.ปลาย',
-    minRequired: minH,
+    passed: got >= minH ? 'ผ่าน' : 'ไม่ผ่าน',
+    level: lv === 'junior' ? 'ม.ต้น' : 'ม.ปลาย',
+    minRequired: minH
   };
-  // ส่งเฉพาะกิจกรรมที่มีข้อมูล (detail หรือ date อย่างใดอย่างหนึ่ง)
-  for(var n=1;n<=5;n++){
-    if(!v('detail'+n)&&!v('date'+n)) continue;
-    payload['date'+n]=fmtDate(v('date'+n));
-    payload['hours'+n]=v('hours'+n);
-    payload['detail'+n]=v('detail'+n);
-    payload['result'+n]=v('result'+n);
-    payload['approver'+n]=v('appr'+n);
+
+  for (var n = 1; n <= 5; n++) {
+    var det = v('a_det' + n), dat = v('a_date' + n);
+    if (!det && !dat) { continue; }
+    payload['date'     + n] = fmtDate(dat);
+    payload['hours'    + n] = v('a_hrs' + n);
+    payload['detail'   + n] = det;
+    payload['result'   + n] = v('a_res' + n);
+    payload['approver' + n] = v('a_apr' + n);
   }
 
-  // ── compress + แนบ base64 ลงใน payload โดยตรง (แยกส่งทีละรูป) ──
-  var imageFiles = [];
-  for(var n=1;n<=5;n++){
-    var z=document.getElementById('upz'+n);
+  // compress images
+  var files = [];
+  for (var n = 1; n <= 5; n++) {
+    var z = document.getElementById('upz' + n);
     var fi = z ? z.querySelector('input[type=file]') : null;
-    imageFiles.push((fi && fi.files && fi.files[0]) ? fi.files[0] : null);
+    files.push(fi && fi.files && fi.files[0] ? fi.files[0] : null);
   }
 
-  // compress รูปทุกใบ แล้วค่อยส่ง payload เดียว
-  var compressPromises = imageFiles.map(function(file, idx) {
+  var promises = files.map(function(file, idx) {
     return new Promise(function(resolve) {
       if (!file) { resolve(null); return; }
       var img = new Image();
       var reader = new FileReader();
       reader.onload = function(e) {
         img.onload = function() {
-          var MAX = 900; // ลดลงอีก เพื่อให้ payload รวมไม่เกิน ~20MB
-          var w = img.width, h = img.height;
+          var MAX = 900, w = img.width, h = img.height;
           if (w > MAX || h > MAX) {
-            var ratio = Math.min(MAX/w, MAX/h);
-            w = Math.round(w*ratio); h = Math.round(h*ratio);
+            var ratio = Math.min(MAX / w, MAX / h);
+            w = Math.round(w * ratio);
+            h = Math.round(h * ratio);
           }
           var canvas = document.createElement('canvas');
           canvas.width = w; canvas.height = h;
@@ -1056,238 +874,195 @@ function submitForm(){
     });
   });
 
-  Promise.all(compressPromises).then(function(base64List) {
-    // แนบ base64 ที่ compress แล้วเข้า payload
-    base64List.forEach(function(b64, idx) {
-      if (b64) payload['image' + (idx+1)] = b64;
+  Promise.all(promises).then(function(b64list) {
+    b64list.forEach(function(b64, idx) {
+      if (b64) { payload['image' + (idx + 1)] = b64; }
     });
-
-    // ส่ง payload ไป GAS
     fetch(GAS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
-    })
-    .then(function() { showDone(); })
-    .catch(function() { showDone(); });
+    }).then(function() { showDone(); }).catch(function() { showDone(); });
   });
 }
 
-function showDone(){
-  document.getElementById('subBtns').style.display='none';
-  document.getElementById('summaryCard').style.opacity='0.4';
-  document.getElementById('doneCard').style.display='block';
-  document.getElementById('successBox').style.display='block';
-  toast('ส่งข้อมูลสำเร็จ! 🎉',false);
+function showDone() {
+  document.getElementById('subBtns').style.display = 'none';
+  document.getElementById('sumCard').style.opacity = '0.4';
+  document.getElementById('doneCard').style.display = 'block';
+  document.getElementById('sucBox').style.display = 'block';
+  toast('ส่งข้อมูลสำเร็จ! 🎉', false);
 }
 
-function resetForm(){
-  document.querySelectorAll('.sp input:not([type=file]),.sp select,.sp textarea').forEach(function(el){el.value='';});
-  document.querySelectorAll('.prev').forEach(function(img){img.src='';img.style.display='none';});
-  document.querySelectorAll('.upzone .uico,.upzone p').forEach(function(el){el.style.display='';});
-  document.getElementById('teacherBox').style.display='none';
-  document.getElementById('criteriaBox').style.display='none';
-  document.getElementById('doneCard').style.display='none';
-  document.getElementById('subBtns').style.display='';
-  document.getElementById('subBtn').disabled=false;
-  document.getElementById('subTxt').innerHTML='📤 ส่งข้อมูล';
-  document.getElementById('summaryCard').style.opacity='';
-  gradeVal=''; semVal='';
-  // rebuild act UI
+function resetForm() {
+  document.querySelectorAll('.sp input:not([type=file]),.sp select,.sp textarea').forEach(function(el) { el.value = ''; });
+  document.querySelectorAll('.prev').forEach(function(img) { img.src = ''; img.style.display = 'none'; });
+  document.querySelectorAll('.upz .uico,.upz p').forEach(function(el) { el.style.display = ''; });
+  document.getElementById('teacherBox').style.display = 'none';
+  document.getElementById('criteriaBox').style.display = 'none';
+  document.getElementById('doneCard').style.display = 'none';
+  document.getElementById('subBtns').style.display = '';
+  document.getElementById('subBtn').disabled = false;
+  document.getElementById('subTxt').innerHTML = '📤 ส่งข้อมูล';
+  document.getElementById('sumCard').style.opacity = '';
   buildActCards();
-  goStep(1);
+  document.getElementById('sp-' + curStep).classList.remove('active');
+  curStep = 1;
+  document.getElementById('sp-1').classList.add('active');
+  updProg();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// init
-buildActUI();
-updateProg();
-
-/* ══════════════════════════════════════════════
-   DASHBOARD LOGIC
-══════════════════════════════════════════════ */
-var dashData = [];   // raw from GAS
-var barChart = null;
+// ============================================================
+// DASHBOARD
+// ============================================================
+var dashData  = [];
+var barChart  = null;
 var doughChart = null;
 
-function loadDash(){
+function loadDash() {
   var sem = document.getElementById('dSem').value;
-  document.getElementById('dashTbl').innerHTML='<tr><td colspan="8"><div class="loading"><div class="loading-spin"></div><br>กำลังโหลดข้อมูล...</div></td></tr>';
-  clearStatCards();
+  document.getElementById('dashTbl').innerHTML = '<tr><td colspan="8"><div class="loading"><div class="lspin"></div><br>กำลังโหลดข้อมูล...</div></td></tr>';
+  ['sAll','sOk','sFail','sRate'].forEach(function(id) { document.getElementById(id).textContent = '–'; });
 
-  fetch(GAS_URL+'?action=getDashboard&semester='+sem+'&year=2569')
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      dashData = d.data || [];
+  fetch(GAS_URL + '?action=getDashboard&semester=' + sem + '&year=2569')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { dashData = d.data || []; renderDash(); })
+    .catch(function() {
+      dashData = genDemo(parseInt(sem));
       renderDash();
-    })
-    .catch(function(){
-      // Demo data when GAS not connected
-      dashData = generateDemoData(parseInt(sem));
-      renderDash();
-      toast('ใช้ข้อมูลตัวอย่าง (ยังไม่ได้ต่อ GAS)',true);
+      toast('ใช้ข้อมูลตัวอย่าง (ยังไม่ได้ต่อ GAS)', true);
     });
 }
 
-function clearStatCards(){
-  ['sAll','sOk','sFail','sRate'].forEach(function(id){ document.getElementById(id).textContent='–'; });
-}
-
-/* ── Demo data generator ── */
-function generateDemoData(sem){
-  var data=[];
-  var grades=['ม.1','ม.2','ม.3','ม.4','ม.5','ม.6'];
-  var rooms=[1,2,3,4,5,6,7,8];
-  grades.forEach(function(g){
-    var lv=getLevel(g), cr=CRITERIA[lv];
-    var minH=cr.min[sem]||cr.min[1];
-    var numRooms=g.startsWith('ม.5')||g.startsWith('ม.6')?7:8;
-    for(var r=1;r<=numRooms;r++){
-      var total=20+Math.floor(Math.random()*15);
-      var passRate=0.55+Math.random()*0.35;
-      var passed=Math.round(total*passRate);
-      var avgH=(minH*(0.7+Math.random()*0.6)).toFixed(1);
+function genDemo(sem) {
+  var data = [];
+  ['ม.1','ม.2','ม.3','ม.4','ม.5','ม.6'].forEach(function(g) {
+    var lv = getLevel(g), minH = CRITERIA[lv].min[String(sem)] || 7;
+    var rooms = (g === 'ม.5' || g === 'ม.6') ? 7 : 8;
+    for (var r = 1; r <= rooms; r++) {
+      var total = 20 + Math.floor(Math.random() * 15);
+      var passed = Math.round(total * (0.55 + Math.random() * 0.35));
       data.push({
-        grade:g, room:String(r),
-        classKey:g+'/'+r,
-        total:total, passed:passed, failed:total-passed,
-        avgHours:parseFloat(avgH),
-        minRequired:minH,
+        grade: g, room: String(r), classKey: g + '/' + r,
+        total: total, passed: passed, failed: total - passed,
+        avgHours: parseFloat((minH * (0.7 + Math.random() * 0.6)).toFixed(1)),
+        minRequired: minH
       });
     }
   });
   return data;
 }
 
-/* ── Render dashboard ── */
-function renderDash(){
-  var sem  = parseInt(document.getElementById('dSem').value);
+function renderDash() {
+  var sem  = document.getElementById('dSem').value;
   var lvF  = document.getElementById('dLevel').value;
   var grF  = document.getElementById('dGrade').value;
 
-  var filtered = dashData.filter(function(d){
-    var lv=getLevel(d.grade);
-    if(lvF==='junior'&&lv!=='junior') return false;
-    if(lvF==='senior'&&lv!=='senior') return false;
-    if(grF!=='all'&&d.grade!==grF)    return false;
+  var filtered = dashData.filter(function(d) {
+    if (lvF === 'junior' && getLevel(d.grade) !== 'junior') { return false; }
+    if (lvF === 'senior' && getLevel(d.grade) !== 'senior') { return false; }
+    if (grF !== 'all' && d.grade !== grF) { return false; }
     return true;
   });
 
-  // totals
-  var totAll=0, totOk=0, totFail=0;
-  filtered.forEach(function(d){ totAll+=d.total; totOk+=d.passed; totFail+=d.failed; });
-  var rate = totAll>0 ? Math.round(totOk/totAll*100) : 0;
+  var totAll = 0, totOk = 0, totFail = 0;
+  filtered.forEach(function(d) { totAll += d.total; totOk += d.passed; totFail += d.failed; });
+  var rate = totAll > 0 ? Math.round(totOk / totAll * 100) : 0;
 
   document.getElementById('sAll').textContent  = totAll;
   document.getElementById('sOk').textContent   = totOk;
   document.getElementById('sFail').textContent = totFail;
-  document.getElementById('sRate').textContent = rate+'%';
-  document.getElementById('sOkSub').textContent  = 'จาก '+totAll+' คน';
-  document.getElementById('sFailSub').textContent= 'ต้องส่งเพิ่ม';
-  document.getElementById('tblSub').textContent  = 'ภาคเรียนที่ '+sem+' · '+filtered.length+' ห้อง';
+  document.getElementById('sRate').textContent = rate + '%';
+  document.getElementById('sOkS').textContent  = 'จาก ' + totAll + ' คน';
+  document.getElementById('tblSub').textContent = 'ภาคเรียนที่ ' + sem + ' · ' + filtered.length + ' ห้อง';
 
-  renderBarChart(filtered);
-  renderDoughChart(totOk, totFail);
+  renderBar(filtered);
+  renderDough(totOk, totFail);
   renderTable(filtered);
 }
 
-/* bar chart */
-function renderBarChart(data){
-  var labels = data.map(function(d){ return d.grade+'/'+d.room; });
-  var passedArr = data.map(function(d){ return d.passed; });
-  var failedArr = data.map(function(d){ return d.failed; });
-
-  if(barChart){ barChart.destroy(); }
+function renderBar(data) {
+  var labels = data.map(function(d) { return d.grade + '/' + d.room; });
+  if (barChart) { barChart.destroy(); }
   var ctx = document.getElementById('barChart').getContext('2d');
-  barChart = new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels:labels,
-      datasets:[
-        {label:'ผ่านเกณฑ์',data:passedArr,backgroundColor:'rgba(64,168,112,.75)',borderRadius:4,borderSkipped:false},
-        {label:'ยังไม่ผ่าน',data:failedArr,backgroundColor:'rgba(208,64,64,.6)',borderRadius:4,borderSkipped:false},
+  barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'ผ่านเกณฑ์', data: data.map(function(d) { return d.passed; }), backgroundColor: 'rgba(64,168,112,.75)', borderRadius: 4, borderSkipped: false },
+        { label: 'ยังไม่ผ่าน', data: data.map(function(d) { return d.failed; }), backgroundColor: 'rgba(208,64,64,.6)', borderRadius: 4, borderSkipped: false }
       ]
     },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{font:{family:'Sarabun',size:11},boxWidth:12}}},
-      scales:{
-        x:{ticks:{font:{family:'Sarabun',size:9},maxRotation:60},grid:{display:false}},
-        y:{ticks:{font:{family:'Sarabun',size:10}},grid:{color:'rgba(0,0,0,.05)'},stacked:false},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12 } } },
+      scales: {
+        x: { ticks: { font: { family: 'Sarabun', size: 9 }, maxRotation: 60 }, grid: { display: false } },
+        y: { ticks: { font: { family: 'Sarabun', size: 10 } }, grid: { color: 'rgba(0,0,0,.05)' } }
       }
     }
   });
 }
 
-/* doughnut */
-function renderDoughChart(ok,fail){
-  if(doughChart){ doughChart.destroy(); }
-  var ctx=document.getElementById('doughChart').getContext('2d');
-  doughChart=new Chart(ctx,{
-    type:'doughnut',
-    data:{
-      labels:['ผ่านเกณฑ์','ยังไม่ผ่าน'],
-      datasets:[{
-        data:[ok,fail],
-        backgroundColor:['rgba(64,168,112,.8)','rgba(208,64,64,.7)'],
-        borderColor:['#fff','#fff'],borderWidth:2,
-      }]
+function renderDough(ok, fail) {
+  if (doughChart) { doughChart.destroy(); }
+  var ctx = document.getElementById('doughChart').getContext('2d');
+  doughChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['ผ่านเกณฑ์', 'ยังไม่ผ่าน'],
+      datasets: [{ data: [ok, fail], backgroundColor: ['rgba(64,168,112,.8)', 'rgba(208,64,64,.7)'], borderColor: ['#fff', '#fff'], borderWidth: 2 }]
     },
-    options:{
-      responsive:true,maintainAspectRatio:false,cutout:'68%',
-      plugins:{
-        legend:{position:'bottom',labels:{font:{family:'Sarabun',size:11},boxWidth:12,padding:12}},
-        tooltip:{callbacks:{label:function(c){
-          var total=c.dataset.data.reduce(function(a,b){return a+b},0);
-          return c.label+': '+c.raw+' ('+Math.round(c.raw/total*100)+'%)';
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '68%',
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { family: 'Sarabun', size: 11 }, boxWidth: 12, padding: 12 } },
+        tooltip: { callbacks: { label: function(c) {
+          var total = c.dataset.data.reduce(function(a, b) { return a + b; }, 0);
+          return c.label + ': ' + c.raw + ' (' + Math.round(c.raw / total * 100) + '%)';
         }}}
       }
     }
   });
 }
 
-/* table */
-function renderTable(data){
-  if(data.length===0){
-    document.getElementById('dashTbl').innerHTML='<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--tx3)">ไม่มีข้อมูล</td></tr>';
+function renderTable(data) {
+  if (!data.length) {
+    document.getElementById('dashTbl').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--tx3)">ไม่มีข้อมูล</td></tr>';
     return;
   }
-  var html='';
-  data.forEach(function(d){
-    var teachers=TM[d.classKey]||[];
-    var teacherStr=teachers.filter(Boolean).join('<br>');
-    var rate=d.total>0?Math.round(d.passed/d.total*100):0;
-    var barCls=rate>=80?'ok':rate>=50?'warn':'fail';
-    var pillCls=rate>=80?'ok':rate>=50?'warn':'fail';
-    var pillTxt=rate>=80?'ดีมาก':rate>=50?'ปานกลาง':'ต้องปรับปรุง';
-    var avgOk=d.avgHours>=(d.minRequired||7);
-    html+='<tr>'+
-      '<td class="tbl-room">'+d.grade+'/'+d.room+'</td>'+
-      '<td style="font-size:.76rem;color:var(--tx2)">'+teacherStr+'</td>'+
-      '<td style="font-weight:700;text-align:center">'+d.total+'</td>'+
-      '<td style="text-align:center"><span style="color:var(--mn3);font-weight:700">'+d.passed+'</span></td>'+
-      '<td style="text-align:center"><span style="color:var(--re2);font-weight:700">'+d.failed+'</span></td>'+
-      '<td><span style="font-weight:700;color:'+(avgOk?'var(--mn3)':'var(--re2)')+'">'+d.avgHours.toFixed(1)+'</span> ชม.</td>'+
-      '<td><div style="display:flex;align-items:center;gap:7px">'+
-        '<div class="mini-bar"><div class="mini-fill '+barCls+'" style="width:'+rate+'%"></div></div>'+
-        '<span style="font-size:.78rem;font-weight:700;color:var(--tx)">'+rate+'%</span>'+
-      '</div></td>'+
-      '<td><span class="pill '+pillCls+'">'+pillTxt+'</span></td>'+
+  var html = '';
+  data.forEach(function(d) {
+    var teachers = TM[d.classKey] || [];
+    var tStr = teachers.filter(Boolean).join('<br>');
+    var rate = d.total > 0 ? Math.round(d.passed / d.total * 100) : 0;
+    var cls  = rate >= 80 ? 'ok' : rate >= 50 ? 'warn' : 'fail';
+    var lbl  = rate >= 80 ? 'ดีมาก' : rate >= 50 ? 'ปานกลาง' : 'ต้องปรับปรุง';
+    var avgOk = d.avgHours >= (d.minRequired || 7);
+    html += '<tr>' +
+      '<td class="tr">' + d.grade + '/' + d.room + '</td>' +
+      '<td style="font-size:.76rem;color:var(--tx2)">' + tStr + '</td>' +
+      '<td style="font-weight:700;text-align:center">' + d.total + '</td>' +
+      '<td style="text-align:center;color:var(--mn3);font-weight:700">' + d.passed + '</td>' +
+      '<td style="text-align:center;color:var(--re2);font-weight:700">' + d.failed + '</td>' +
+      '<td><span style="font-weight:700;color:' + (avgOk ? 'var(--mn3)' : 'var(--re2)') + '">' + d.avgHours.toFixed(1) + '</span> ชม.</td>' +
+      '<td><div style="display:flex;align-items:center;gap:7px">' +
+        '<div class="mb"><div class="mf ' + cls + '" style="width:' + rate + '%"></div></div>' +
+        '<span style="font-size:.78rem;font-weight:700">' + rate + '%</span>' +
+      '</div></td>' +
+      '<td><span class="dp ' + cls + '">' + lbl + '</span></td>' +
     '</tr>';
   });
-  document.getElementById('dashTbl').innerHTML=html;
+  document.getElementById('dashTbl').innerHTML = html;
 }
 
-/* ── Toast ── */
-function toast(msg,err){
-  var t=document.getElementById('toast');
-  document.getElementById('tMsg').textContent=msg;
-  document.getElementById('tIco').textContent=err?'⚠️':'✅';
-  t.className='toast'+(err?' err':'')+' show';
-  setTimeout(function(){ t.classList.remove('show'); },3500);
-}
-
-/* init dash */
+// ============================================================
+// INIT
+// ============================================================
+buildActCards();
+updProg();
 loadDash();
 </script>
 </body>
