@@ -598,7 +598,7 @@ tr:hover td{background:#FFF8FB}
 /* ══════════════════════════════════════════════
    CONFIG
 ══════════════════════════════════════════════ */
-var GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbxwkaC9hXedQ7sPHvczP99JFFzUZsPyx_3rVFr2sNVJuXk_elqY7cyliau4bMOe863urw/exec';
 
 /* เกณฑ์ชั่วโมง */
 var CRITERIA = {
