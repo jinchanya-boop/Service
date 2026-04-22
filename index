@@ -945,6 +945,52 @@ function buildSummary(){
 }
 
 /* ── Submit ── */
+// ── อัปโหลดรูปเดี่ยว → GAS → ได้ Drive File ID กลับมา ──────────
+function uploadImageToGAS(file, slotNum) {
+  return new Promise(function(resolve) {
+    if (!file) { resolve(null); return; }
+
+    // compress ก่อนส่ง — resize ให้ไม่เกิน 1200px และ quality 0.75
+    var img = new Image();
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      img.onload = function() {
+        var MAX = 1200;
+        var w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          var ratio = Math.min(MAX/w, MAX/h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var base64 = canvas.toDataURL('image/jpeg', 0.75); // ~ลดขนาด 70-80%
+
+        // ส่ง base64 ไป GAS endpoint uploadImage
+        fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'uploadImage',
+            slot: slotNum,
+            filename: file.name || ('image'+slotNum+'.jpg'),
+            base64: base64,
+          })
+        })
+        .then(function() {
+          // no-cors ไม่อ่าน response ได้ — ส่ง base64 กลับไปใช้ใน payload โดยตรง
+          resolve(base64);
+        })
+        .catch(function() { resolve(base64); });
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function submitForm(){
   var btn=document.getElementById('subBtn');
   btn.disabled=true;
@@ -978,26 +1024,56 @@ function submitForm(){
     payload['approver'+n]=v('appr'+n);
   }
 
-  // collect images
-  var ps=[];
+  // ── compress + แนบ base64 ลงใน payload โดยตรง (แยกส่งทีละรูป) ──
+  var imageFiles = [];
   for(var n=1;n<=5;n++){
-    (function(num){
-      var z=document.getElementById('upz'+num);
-      if(!z) return;
-      var fi=z.querySelector('input[type=file]');
-      if(fi&&fi.files&&fi.files[0]){
-        ps.push(new Promise(function(res){
-          var rd=new FileReader();
-          rd.onload=function(e){ payload['image'+num]=e.target.result; res(); };
-          rd.readAsDataURL(fi.files[0]);
-        }));
-      }
-    })(n);
+    var z=document.getElementById('upz'+n);
+    var fi = z ? z.querySelector('input[type=file]') : null;
+    imageFiles.push((fi && fi.files && fi.files[0]) ? fi.files[0] : null);
   }
 
-  Promise.all(ps).then(function(){
-    fetch(GAS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-      .then(function(){ showDone(); }).catch(function(){ showDone(); });
+  // compress รูปทุกใบ แล้วค่อยส่ง payload เดียว
+  var compressPromises = imageFiles.map(function(file, idx) {
+    return new Promise(function(resolve) {
+      if (!file) { resolve(null); return; }
+      var img = new Image();
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        img.onload = function() {
+          var MAX = 900; // ลดลงอีก เพื่อให้ payload รวมไม่เกิน ~20MB
+          var w = img.width, h = img.height;
+          if (w > MAX || h > MAX) {
+            var ratio = Math.min(MAX/w, MAX/h);
+            w = Math.round(w*ratio); h = Math.round(h*ratio);
+          }
+          var canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.70));
+        };
+        img.onerror = function() { resolve(null); };
+        img.src = e.target.result;
+      };
+      reader.onerror = function() { resolve(null); };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  Promise.all(compressPromises).then(function(base64List) {
+    // แนบ base64 ที่ compress แล้วเข้า payload
+    base64List.forEach(function(b64, idx) {
+      if (b64) payload['image' + (idx+1)] = b64;
+    });
+
+    // ส่ง payload ไป GAS
+    fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function() { showDone(); })
+    .catch(function() { showDone(); });
   });
 }
 
