@@ -183,18 +183,7 @@ body{font-family:'Sarabun',sans-serif;background:var(--cr);color:var(--tx);min-h
 .act-body{padding:16px;border-top:1.5px solid var(--bd);display:none;background:var(--wh)}
 .act-body.open{display:block;animation:slideUp .2s}
 
-/* optional toggle */
-.act-enable{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:.82rem;font-weight:600;color:var(--tx2)}
-.toggle-sw{
-  width:38px;height:22px;background:var(--bd);border-radius:11px;cursor:pointer;
-  position:relative;transition:background .2s;flex-shrink:0;
-}
-.toggle-sw::after{
-  content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;
-  background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);
-}
-.toggle-sw.on{background:linear-gradient(135deg,var(--mn2),#40D070)}
-.toggle-sw.on::after{left:19px}
+/* optional toggle - removed */
 
 /* upload */
 .upzone{
@@ -458,9 +447,7 @@ tr:hover td{background:#FFF8FB}
           <span id="hmStatus" class="hm-status err">ยังไม่ผ่านเกณฑ์</span>
         </div>
       </div>
-      <div class="sec-ttl">เลือกกิจกรรมที่ต้องการบันทึก (ทำกี่ครั้งก็ได้)</div>
-      <!-- act enable toggles -->
-      <div id="actToggles"></div>
+      <div class="sec-ttl">กรอกกิจกรรมที่ทำ (กี่ครั้งก็ได้ แต่ต้องรวมชั่วโมงให้ถึงเกณฑ์)</div>
     </div>
 
     <!-- Activity cards -->
@@ -673,7 +660,6 @@ function switchPage(p){
    FORM LOGIC
 ══════════════════════════════════════════════ */
 var curStep = 1;
-var actEnabled = {1:true,2:false,3:false,4:false,5:false};
 var semVal = '';
 var gradeVal = '';
 
@@ -729,17 +715,33 @@ function validateStep(step){
     }
   }
   if(step===2){
-    var hasAny=false;
+    // ตรวจกิจกรรมที่กรอกบางส่วน — ถ้าเริ่มกรอกต้องกรอกให้ครบ
+    var hasAny = false;
     for(var n=1;n<=5;n++){
-      if(!actEnabled[n]) continue;
-      hasAny=true;
-      if(!v('date'+n)||!v('hours'+n)||!v('detail'+n)||!v('result'+n)){
-        toast('กรุณากรอกกิจกรรมครั้งที่ '+n+' ให้ครบ (วันที่, ชั่วโมง, รายการ, ผล)',true);
+      var d=v('date'+n), h=v('hours'+n), det=v('detail'+n), res=v('result'+n);
+      var hasSome = d||h||det||res;
+      if(!hasSome) continue; // ว่างทั้งหมด = ไม่ได้ทำ ข้ามได้
+      hasAny = true;
+      // มีบางส่วน → ต้องกรอกให้ครบ
+      if(!d)  { toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกวันที่',true); openActBody(n); return false; }
+      if(!h)  { toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกจำนวนชั่วโมง',true); openActBody(n); return false; }
+      if(!det){ toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกรายการกิจกรรม',true); openActBody(n); return false; }
+      if(!res){ toast('กิจกรรมครั้งที่ '+n+': กรุณากรอกผลการดำเนินงาน',true); openActBody(n); return false; }
+      if(parseFloat(h)<=0){ toast('กิจกรรมครั้งที่ '+n+': ชั่วโมงต้องมากกว่า 0',true); return false; }
+    }
+    if(!hasAny){ toast('กรุณากรอกอย่างน้อย 1 กิจกรรม',true); return false; }
+
+    // ตรวจเกณฑ์ชั่วโมง
+    var g=v('grade'), s=parseInt(v('semester'));
+    if(g && s){
+      var lv=getLevel(g), cr=CRITERIA[lv];
+      var minH=cr.min[s]||cr.min[1];
+      var got=getTotalHours();
+      if(got < minH){
+        toast('ชั่วโมงรวม '+got.toFixed(1)+' ชม. ยังไม่ถึงเกณฑ์ '+minH+' ชม. กรุณาเพิ่มกิจกรรม',true);
         return false;
       }
-      if(parseFloat(v('hours'+n))<=0){ toast('ชั่วโมงต้องมากกว่า 0',true); return false; }
     }
-    if(!hasAny){ toast('กรุณาเปิดใช้งานอย่างน้อย 1 กิจกรรม',true); return false; }
   }
   return true;
 }
@@ -789,71 +791,60 @@ function updateCriteria(){
   box.style.display='block';
 }
 
-/* ── Activity UI builder ── */
+/* ── Activity UI builder — แสดงทุกกิจกรรมเลย ไม่มี toggle ── */
 function buildActUI(){
-  buildToggles();
   buildActCards();
-}
-
-function buildToggles(){
-  var html='';
-  for(var n=1;n<=5;n++){
-    var on=actEnabled[n];
-    html+='<div class="act-enable">'+
-      '<div class="toggle-sw'+(on?' on':'')+'" onclick="toggleAct('+n+')" id="tog'+n+'"></div>'+
-      '<span class="act-num '+ACT_COLORS[n-1]+'" style="width:26px;height:26px;font-size:.75rem;border-radius:7px">'+n+'</span>'+
-      ' กิจกรรมครั้งที่ '+n+(n===1?' <span style="color:var(--pk2);font-size:.72rem">(จำเป็น)</span>':'')+
-      '</div>';
-  }
-  document.getElementById('actToggles').innerHTML=html;
-}
-
-function toggleAct(n){
-  if(n===1) return; // act 1 required
-  actEnabled[n]=!actEnabled[n];
-  document.getElementById('tog'+n).classList.toggle('on', actEnabled[n]);
-  // show/hide card
-  var card=document.getElementById('actCard'+n);
-  if(card){ card.style.display=actEnabled[n]?'block':'none'; }
-  updateHourMeter();
 }
 
 function buildActCards(){
   var html='';
   for(var n=1;n<=5;n++){
-    var show=actEnabled[n];
-    html+='<div class="act-card" id="actCard'+n+'" style="'+(show?'':'display:none')+'">'+
-      '<div class="act-hdr" onclick="toggleActBody('+n+')">'+
-      '<div class="act-num '+ACT_COLORS[n-1]+'">'+n+'</div>'+
-      '<div class="act-hdr-txt"><h3>'+ACT_EMOJIS[n-1]+' กิจกรรมครั้งที่ '+n+'</h3>'+
-      '<p id="actSub'+n+'">กรอกรายละเอียดกิจกรรม</p></div>'+
-      '<span class="act-toggle'+(n===1?' open':'')+'" id="actArr'+n+'">▼</span>'+
-      '</div>'+
-      '<div class="act-body'+(n===1?' open':'')+'" id="actBody'+n+'">'+
-        '<div class="fg c2">'+
-          '<div class="fi"><label>📅 วัน/เดือน/ปี <span class="req">*</span></label>'+
-          '<input type="date" id="date'+n+'" oninput="updateActSub('+n+');updateHourMeter()"></div>'+
-          '<div class="fi"><label>⏱ จำนวนชั่วโมง <span class="req">*</span></label>'+
-          '<input type="number" id="hours'+n+'" min="0.5" max="24" step="0.5" placeholder="เช่น 3" oninput="updateHourMeter()"></div>'+
+    html+=
+      '<div class="act-card" id="actCard'+n+'">'+
+        '<div class="act-hdr" onclick="toggleActBody('+n+')">'+
+          '<div class="act-num '+ACT_COLORS[n-1]+'">'+n+'</div>'+
+          '<div class="act-hdr-txt">'+
+            '<h3>'+ACT_EMOJIS[n-1]+' กิจกรรมครั้งที่ '+n+'</h3>'+
+            '<p id="actSub'+n+'">กรอกรายละเอียดกิจกรรม (ไม่บังคับถ้าไม่ได้ทำ)</p>'+
+          '</div>'+
+          '<span class="act-toggle'+(n===1?' open':'')+'" id="actArr'+n+'">▼</span>'+
         '</div>'+
-        '<div class="fg" style="margin-top:11px">'+
-          '<div class="fi"><label>📝 รายการกิจกรรม (รายละเอียด) <span class="req">*</span></label>'+
-          '<textarea id="detail'+n+'" placeholder="อธิบายรายละเอียดกิจกรรมที่ทำ..."></textarea></div>'+
-          '<div class="fi"><label>✅ ผลการดำเนินกิจกรรม <span class="req">*</span></label>'+
-          '<textarea id="result'+n+'" placeholder="สรุปผลที่ได้..."></textarea></div>'+
-          '<div class="fi"><label>🖊 ลงชื่อผู้รับรอง</label>'+
-          '<input type="text" id="appr'+n+'" placeholder="ชื่อผู้รับรอง"></div>'+
+        '<div class="act-body'+(n===1?' open':'')+'" id="actBody'+n+'">'+
+          '<div class="fg c2">'+
+            '<div class="fi"><label>📅 วัน/เดือน/ปี</label>'+
+            '<input type="date" id="date'+n+'" oninput="updateActSub('+n+');updateHourMeter()"></div>'+
+            '<div class="fi"><label>⏱ จำนวนชั่วโมง</label>'+
+            '<input type="number" id="hours'+n+'" min="0.5" max="24" step="0.5" placeholder="เช่น 3" oninput="updateHourMeter()"></div>'+
+          '</div>'+
+          '<div class="fg" style="margin-top:11px">'+
+            '<div class="fi"><label>📝 รายการกิจกรรม (รายละเอียด)</label>'+
+            '<textarea id="detail'+n+'" placeholder="อธิบายรายละเอียดกิจกรรมที่ทำ..."></textarea></div>'+
+            '<div class="fi"><label>✅ ผลการดำเนินกิจกรรม</label>'+
+            '<textarea id="result'+n+'" placeholder="สรุปผลที่ได้..."></textarea></div>'+
+            '<div class="fi"><label>🖊 ลงชื่อผู้รับรอง</label>'+
+            '<input type="text" id="appr'+n+'" placeholder="ชื่อผู้รับรอง"></div>'+
+          '</div>'+
+          '<div class="fi" style="margin-top:11px"><label>📷 รูปภาพการจัดกิจกรรม</label>'+
+          '<div class="upzone" id="upz'+n+'">'+
+            '<input type="file" accept="image/*" onchange="previewImg(this,\'prev'+n+'\',\'upz'+n+'\')">'+
+            '<div class="uico">🖼️</div><p>คลิกหรือลากรูปมาวาง</p>'+
+            '<img id="prev'+n+'" class="prev">'+
+          '</div></div>'+
         '</div>'+
-        '<div class="fi" style="margin-top:11px"><label>📷 รูปภาพการจัดกิจกรรม</label>'+
-        '<div class="upzone" id="upz'+n+'">'+
-          '<input type="file" accept="image/*" onchange="previewImg(this,\'prev'+n+'\',\'upz'+n+'\')">'+
-          '<div class="uico">🖼️</div><p>คลิกหรือลากรูปมาวาง</p>'+
-          '<img id="prev'+n+'" class="prev">'+
-        '</div></div>'+
-      '</div>'+
-    '</div>';
+      '</div>';
   }
   document.getElementById('actCards').innerHTML=html;
+}
+
+/* เปิด act body (ใช้ตอน validate error) */
+function openActBody(n){
+  var body=document.getElementById('actBody'+n);
+  var arr=document.getElementById('actArr'+n);
+  if(body){ body.classList.add('open'); }
+  if(arr){ arr.classList.add('open'); }
+  // scroll ไปหา
+  var card=document.getElementById('actCard'+n);
+  if(card) card.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
 function toggleActBody(n){
@@ -875,13 +866,23 @@ function updateHourMeter(){
   if(!g||!s) return;
   var lv=getLevel(g), cr=CRITERIA[lv];
   var minH=cr.min[s]||cr.min[1];
-  var total=cr.total;
+/* ── นับชั่วโมงรวมเฉพาะกิจกรรมที่กรอกข้อมูล ── */
+function getTotalHours(){
   var got=0;
   for(var n=1;n<=5;n++){
-    if(actEnabled[n]&&v('hours'+n)) got+=parseFloat(v('hours'+n))||0;
+    if(v('hours'+n) && v('detail'+n)) got+=parseFloat(v('hours'+n))||0;
   }
-  var pct=Math.min(100, (got/minH)*100);
-  var cls = got>=minH?'ok': got>=(minH*0.5)?'warn':'err';
+  return got;
+}
+
+function updateHourMeter(){
+  var g=v('grade'), s=parseInt(v('semester'));
+  if(!g||!s) return;
+  var lv=getLevel(g), cr=CRITERIA[lv];
+  var minH=cr.min[s]||cr.min[1];
+  var got=getTotalHours();
+  var pct=Math.min(100,(got/minH)*100);
+  var cls=got>=minH?'ok':got>=(minH*0.5)?'warn':'err';
   document.getElementById('hmFill').style.width=pct+'%';
   document.getElementById('hmFill').className='hm-fill '+cls;
   document.getElementById('hmTotalTxt').textContent=got.toFixed(1)+' / '+minH+' ชั่วโมง';
@@ -917,12 +918,9 @@ function buildSummary(){
   var g=v('grade'), r=v('room'), t=TM[g+'/'+r]||[];
   var sem=v('semester'), lv=getLevel(g), cr=CRITERIA[lv];
   var minH=cr.min[parseInt(sem)]||cr.min[1];
-  var got=0;
-  for(var n=1;n<=5;n++){
-    if(actEnabled[n]&&v('hours'+n)) got+=parseFloat(v('hours'+n))||0;
-  }
-  var passClass = got>=minH?'ok':'fail';
-  var passText  = got>=minH?'✅ ผ่านเกณฑ์':'❌ ยังไม่ผ่านเกณฑ์';
+  var got=getTotalHours();
+  var passClass=got>=minH?'ok':'fail';
+  var passText =got>=minH?'✅ ผ่านเกณฑ์':'❌ ยังไม่ผ่านเกณฑ์';
 
   var h='';
   h+='<div class="sum-row"><span class="sum-key">ชั้น/ห้อง</span><span class="sum-val">'+g+'/'+r+'</span></div>';
@@ -930,14 +928,15 @@ function buildSummary(){
   h+='<div class="sum-row"><span class="sum-key">ชื่อ-นามสกุล</span><span class="sum-val">'+v('prefix')+' '+v('name')+'</span></div>';
   h+='<div class="sum-row"><span class="sum-key">ภาคเรียน</span><span class="sum-val">'+sem+'/2569</span></div>';
   h+='<div class="sum-row"><span class="sum-key">ครูที่ปรึกษา</span><span class="sum-val">'+(t.filter(Boolean).join(' · ')||'-')+'</span></div>';
-  h+='<div class="sum-row"><span class="sum-key">รวมชั่วโมง</span><span class="sum-val">'+got.toFixed(1)+' ชั่วโมง  <span class="pill '+passClass+'">'+passText+'</span></span></div>';
+  h+='<div class="sum-row"><span class="sum-key">รวมชั่วโมง</span><span class="sum-val">'+got.toFixed(1)+' ชั่วโมง &nbsp;<span class="pill '+passClass+'">'+passText+'</span></span></div>';
   for(var n=1;n<=5;n++){
-    if(!actEnabled[n]||!v('detail'+n)) continue;
+    // แสดงเฉพาะกิจกรรมที่กรอกข้อมูล
+    if(!v('detail'+n)&&!v('date'+n)) continue;
     h+='<div class="sum-act"><h4>'+ACT_EMOJIS[n-1]+' กิจกรรมครั้งที่ '+n+'</h4>';
     h+='<div class="sum-row"><span class="sum-key">วันที่</span><span class="sum-val">'+fmtDate(v('date'+n))+'</span></div>';
     h+='<div class="sum-row"><span class="sum-key">ชั่วโมง</span><span class="sum-val">'+(v('hours'+n)||'-')+' ชั่วโมง</span></div>';
     h+='<div class="sum-row"><span class="sum-key">รายการกิจกรรม</span><span class="sum-val">'+v('detail'+n)+'</span></div>';
-    h+='<div class="sum-row"><span class="sum-key">ผลการดำเนินงาน</span><span class="sum-val">'+v('result'+n)+'</span></div>';
+    h+='<div class="sum-row"><span class="sum-key">ผลการดำเนินงาน</span><span class="sum-val">'+(v('result'+n)||'-')+'</span></div>';
     if(v('appr'+n)) h+='<div class="sum-row"><span class="sum-key">ผู้รับรอง</span><span class="sum-val">'+v('appr'+n)+'</span></div>';
     h+='</div>';
   }
@@ -999,10 +998,7 @@ function submitForm(){
   var g=v('grade'),r=v('room'),t=TM[g+'/'+r]||[];
   var sem=v('semester'), lv=getLevel(g), cr=CRITERIA[lv];
   var minH=cr.min[parseInt(sem)]||cr.min[1];
-  var got=0;
-  for(var n=1;n<=5;n++){
-    if(actEnabled[n]&&v('hours'+n)) got+=parseFloat(v('hours'+n))||0;
-  }
+  var got=getTotalHours();
 
   var payload={
     action:'submitActivity',
@@ -1015,8 +1011,9 @@ function submitForm(){
     level: lv==='junior'?'ม.ต้น':'ม.ปลาย',
     minRequired: minH,
   };
+  // ส่งเฉพาะกิจกรรมที่มีข้อมูล (detail หรือ date อย่างใดอย่างหนึ่ง)
   for(var n=1;n<=5;n++){
-    if(!actEnabled[n]) continue;
+    if(!v('detail'+n)&&!v('date'+n)) continue;
     payload['date'+n]=fmtDate(v('date'+n));
     payload['hours'+n]=v('hours'+n);
     payload['detail'+n]=v('detail'+n);
@@ -1096,10 +1093,8 @@ function resetForm(){
   document.getElementById('subBtn').disabled=false;
   document.getElementById('subTxt').innerHTML='📤 ส่งข้อมูล';
   document.getElementById('summaryCard').style.opacity='';
-  actEnabled={1:true,2:false,3:false,4:false,5:false};
   gradeVal=''; semVal='';
   // rebuild act UI
-  buildToggles();
   buildActCards();
   goStep(1);
 }
