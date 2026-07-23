@@ -633,8 +633,8 @@ function validateStep(step) {
       var lv = getLevel(g), minH = CRITERIA[lv].min[s];
       var got = getTotalHours();
       if (got < minH) {
-        toast('ชั่วโมงรวม ' + got.toFixed(1) + ' ชม. ยังไม่ถึงเกณฑ์ ' + minH + ' ชม.', true);
-        return false;
+        toast('ชั่วโมงรวม ' + got.toFixed(1) + ' ชม. (เกณฑ์ ' + minH + ' ชม.) ระบบบันทึกข้อมูลให้แล้ว', false);
+        // We do not return false here anymore, allow saving
       }
     }
     return true;
