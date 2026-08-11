@@ -442,7 +442,7 @@ tr:hover td{background:#FFF8FB}
           <tr>
             <th>ชั้น/ห้อง</th><th>ครูที่ปรึกษา</th><th>ส่งแล้ว</th>
             <th>ผ่านเกณฑ์</th><th>ยังไม่ผ่าน</th><th>เฉลี่ยชั่วโมง</th>
-            <th>อัตราผ่าน</th><th>สถานะ</th>
+            <th>อัตราผ่าน</th><th>สถานะ</th><th>แฟ้มผลงาน</th>
           </tr>
         </thead>
         <tbody id="dashTbl"></tbody>
@@ -1096,6 +1096,9 @@ function renderTable(data) {
       htmlFailed += '<div style="font-size:0.75rem; color:var(--tx2); margin-top:4px; font-weight:normal; line-height:1.2;">' + d.failedList.join('<br>') + '</div>';
     }
 
+    var searchUrl = d.folderId 
+      ? 'https://drive.google.com/drive/folders/' + d.folderId 
+      : 'https://drive.google.com/drive/folders/1szSJVFa4FChpM8KAIbI1qshGYWRCxEMu'; // ลิงก์โฟลเดอร์หลัก
     html += '<tr>' +
       '<td class="tr">' + d.grade + '/' + d.room + '</td>' +
       '<td style="font-size:.76rem;color:var(--tx2)">' + tStr + '</td>' +
@@ -1108,6 +1111,7 @@ function renderTable(data) {
         '<span style="font-size:.78rem;font-weight:700">' + rate + '%</span>' +
       '</div></td>' +
       '<td><span class="dp ' + cls + '">' + lbl + '</span></td>' +
+      '<td style="text-align:center;"><a href="' + searchUrl + '" target="_blank" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; background:var(--cr); border:1.5px solid var(--bd); border-radius:var(--rs); text-decoration:none; color:var(--tx2); font-size:0.75rem; font-weight:700; transition:all 0.2s;" onmouseover="this.style.borderColor=\'var(--pk2)\'; this.style.color=\'var(--pk2)\';" onmouseout="this.style.borderColor=\'var(--bd)\'; this.style.color=\'var(--tx2)\';">📁 เปิดดู</a></td>' +
     '</tr>';
   });
   document.getElementById('dashTbl').innerHTML = html;
