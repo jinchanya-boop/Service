@@ -848,6 +848,18 @@ function buildSummary() {
 // FORM — SUBMIT
 // ============================================================
 function submitForm() {
+  for (var n = 1; n <= 5; n++) {
+    var det = v('a_det' + n), dat = v('a_date' + n);
+    if (det || dat) {
+      var z = document.getElementById('upz' + n);
+      var fi = z ? z.querySelector('input[type=file]') : null;
+      if (!fi || !fi.files || !fi.files[0]) {
+        alert('กรุณาแนบรูปภาพสำหรับการทำกิจกรรมครั้งที่ ' + n + ' ก่อนทำการส่งข้อมูล');
+        return;
+      }
+    }
+  }
+
   var btn = document.getElementById('subBtn');
   btn.disabled = true;
   document.getElementById('subTxt').innerHTML = '<span class="spin"></span> กำลังส่ง...';
