@@ -938,11 +938,24 @@ function submitForm() {
         'Content-Type': 'text/plain;charset=utf-8'
       },
       body: JSON.stringify(payload)
-    }).then(function() { 
-      showDone(); 
+    }).then(function(res) {
+      return res.json(); // อ่านค่า JSON ที่ส่งกลับมาจาก code.gs
+    }).then(function(data) { 
+      if (data.status === 'success' || data.status === 'ok') {
+        showDone(); 
+      } else {
+        // ถ้าระบบตอบกลับมาเป็น error เช่น คิวเต็ม
+        alert('เกิดข้อผิดพลาด: ' + (data.message || 'ไม่สามารถส่งข้อมูลได้'));
+        document.getElementById('subBtns').style.display = '';
+        document.getElementById('subBtn').disabled = false;
+        document.getElementById('subTxt').innerHTML = '📤 ส่งข้อมูล';
+      }
     }).catch(function(err) { 
       console.error(err);
-      showDone(); 
+      alert('เกิดข้อผิดพลาดในการเชื่อมต่อ (อาจมีคนใช้งานพร้อมกันจำนวนมาก) กรุณาลองกดส่งใหม่อีกครั้ง');
+      document.getElementById('subBtns').style.display = '';
+      document.getElementById('subBtn').disabled = false;
+      document.getElementById('subTxt').innerHTML = '📤 ส่งข้อมูล';
     });
   });
 }
