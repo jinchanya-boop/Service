@@ -898,6 +898,8 @@ function checkStudentThenNext() {
   var req = info; req.action = 'checkStudent';
   postApi(req).then(function(d) {
     btn.disabled = false; btn.innerHTML = 'ถัดไป →';
+    // ระบบหลังบ้านเวอร์ชันเก่ายังไม่รู้จักคำสั่งนี้ → ให้กรอกต่อได้ ไม่ขวางนักเรียน
+    if (d.status === 'error' && /Unknown action/.test(d.message || '')) { nextStep(1); return; }
     if (d.status !== 'ok') { alert(d.message || 'ตรวจสอบข้อมูลไม่สำเร็จ'); return; }
     studentChecked = sig;
     if (d.submittedCount > 0) {
@@ -1421,10 +1423,14 @@ function openRoom(grade, room) {
     .then(function(r) { return r.json(); })
     .then(function(d) {
       if (d.status !== 'ok') { throw new Error(d.message || 'error'); }
+      if (!d.students) {
+        throw new Error('ระบบหลังบ้าน (Apps Script) ยังเป็นเวอร์ชันเก่า — กรุณา Deploy เป็นเวอร์ชันใหม่ (Manage deployments → Edit → New version)');
+      }
       renderRoom(d);
     })
-    .catch(function() {
-      document.getElementById('roomBody').innerHTML = '<div class="loading">โหลดข้อมูลไม่สำเร็จ กรุณาลองใหม่</div>';
+    .catch(function(err) {
+      document.getElementById('roomBody').innerHTML = '<div class="loading">โหลดข้อมูลไม่สำเร็จ<br><span style="font-size:.8rem;color:var(--re2)">' +
+        esc(err && err.message && err.message !== 'Failed to fetch' ? err.message : 'กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่') + '</span></div>';
     });
 }
 
@@ -1484,7 +1490,12 @@ function openPdf(id, title) {
   fetch(GAS_URL + '?action=getPdf&id=' + encodeURIComponent(id))
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      if (d.status !== 'ok') { body.innerHTML = '<div class="loading">' + esc(d.message || 'เปิดไฟล์ไม่ได้') + '</div>'; return; }
+      if (d.status !== 'ok' || !d.base64) {
+        body.innerHTML = '<div class="loading">' + esc(d.base64 === undefined && d.status === 'ok'
+          ? 'ระบบหลังบ้าน (Apps Script) ยังเป็นเวอร์ชันเก่า — กรุณา Deploy เป็นเวอร์ชันใหม่'
+          : (d.message || 'เปิดไฟล์ไม่ได้')) + '</div>';
+        return;
+      }
       renderPdf(d.base64, body, d.name);
     })
     .catch(function() { body.innerHTML = '<div class="loading">โหลด PDF ไม่สำเร็จ กรุณาลองใหม่</div>'; });
