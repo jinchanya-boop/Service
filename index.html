@@ -900,14 +900,23 @@ function submitForm() {
     files.push(fi && fi.files && fi.files[0] ? fi.files[0] : null);
   }
 
+  // แปลงรูปทุกชนิดให้เป็น JPEG ขนาดเล็ก (Google Slides รับได้แค่ JPG/PNG/GIF)
+  // ถ้าแปลงไม่ได้ จะคืนค่า 'ERROR' เพื่อแจ้งนักเรียน แทนการทิ้งรูปเงียบๆ
   var promises = files.map(function(file, idx) {
     return new Promise(function(resolve) {
       if (!file) { resolve(null); return; }
+      var url = URL.createObjectURL(file);
       var img = new Image();
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        img.onload = function() {
-          var MAX = 900, w = img.width, h = img.height;
+      var done = false;
+      var timer = setTimeout(function() {
+        if (!done) { done = true; URL.revokeObjectURL(url); resolve('ERROR'); }
+      }, 20000);
+      img.onload = function() {
+        if (done) { return; }
+        done = true; clearTimeout(timer);
+        try {
+          var MAX = 1000, w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+          if (!w || !h) { URL.revokeObjectURL(url); resolve('ERROR'); return; }
           if (w > MAX || h > MAX) {
             var ratio = Math.min(MAX / w, MAX / h);
             w = Math.round(w * ratio);
@@ -915,22 +924,47 @@ function submitForm() {
           }
           var canvas = document.createElement('canvas');
           canvas.width = w; canvas.height = h;
-          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          resolve(canvas.toDataURL('image/jpeg', 0.70));
-        };
-        img.onerror = function() { resolve(null); };
-        img.src = e.target.result;
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';            // พื้นขาว (กันรูป PNG โปร่งใสกลายเป็นสีดำ)
+          ctx.fillRect(0, 0, w, h);
+          ctx.drawImage(img, 0, 0, w, h);
+          var out = canvas.toDataURL('image/jpeg', 0.75);
+          URL.revokeObjectURL(url);
+          // toDataURL คืน "data:," เมื่อแปลงล้มเหลว (เช่น หน่วยความจำมือถือไม่พอ)
+          if (!out || out.indexOf('data:image/jpeg') !== 0 || out.length < 1000) { resolve('ERROR'); return; }
+          resolve(out);
+        } catch (err) {
+          URL.revokeObjectURL(url);
+          resolve('ERROR');
+        }
       };
-      reader.onerror = function() { resolve(null); };
-      reader.readAsDataURL(file);
+      img.onerror = function() {
+        if (done) { return; }
+        done = true; clearTimeout(timer);
+        URL.revokeObjectURL(url);
+        resolve('ERROR');   // มักเกิดกับไฟล์ HEIC/HEIF หรือไฟล์เสีย
+      };
+      img.src = url;
     });
   });
 
   Promise.all(promises).then(function(b64list) {
+    var failed = [];
     b64list.forEach(function(b64, idx) {
-      if (b64) { payload['image' + (idx + 1)] = b64; }
+      if (b64 === 'ERROR') { failed.push(idx + 1); }
+      else if (b64) { payload['image' + (idx + 1)] = b64; }
     });
-    
+
+    if (failed.length) {
+      alert('ไม่สามารถอ่านรูปของกิจกรรมครั้งที่ ' + failed.join(', ') +
+            ' ได้\n\nกรุณาเลือกรูปใหม่ (ควรเป็นไฟล์ .jpg หรือ .png)\n' +
+            'หากใช้ iPhone ให้ลองแคปหน้าจอรูปนั้น แล้วแนบภาพที่แคปแทน');
+      document.getElementById('subBtns').style.display = '';
+      document.getElementById('subBtn').disabled = false;
+      document.getElementById('subTxt').innerHTML = '📤 ส่งข้อมูล';
+      return;
+    }
+
     // ✨ แก้ไขจุดนี้: ยกเลิกการใช้ FormData และเปลี่ยนเป็นส่ง Text ธรรมดา
     fetch(GAS_URL, {
       method: 'POST',
